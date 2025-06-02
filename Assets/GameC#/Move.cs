@@ -5,7 +5,7 @@ using UnityEngine;
 public class DroneController : MonoBehaviour
 {
     float rotationSpeed = 50f;
-    float speed = 15f;
+    float speed = 20f;
     public float tiltAngle = 5f; // 最大傾斜角
     public float tiltSmooth = 100f; // 傾きの補間速度
     private Rigidbody rb;
@@ -51,15 +51,20 @@ public class DroneController : MonoBehaviour
         {
             Debug.Log("アーチをくぐった！");
         }
+       
     
     }
     void OnCollisionEnter(Collision collision)
-{
-    if (collision.gameObject.CompareTag("Ground"))
     {
-        rb.angularVelocity = Vector3.zero; // 接地時に回転の揺れを抑える
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // 地面にぶつかったときの縦方向の速度をゼロにする
-    }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            rb.angularVelocity = Vector3.zero; // 接地時に回転の揺れを抑える
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // 地面にぶつかったときの縦方向の速度をゼロにする
+        }
+     if (collision.gameObject.CompareTag("Goal"))
+        {
+            Global.ChangeScene("Result");
+        }
 }
 
 }
