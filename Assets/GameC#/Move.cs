@@ -4,54 +4,78 @@ using UnityEngine;
 
 public class DroneController : MonoBehaviour
 {
-    float rotationSpeed = 50f;
-    float speed = 20f;
-    public float tiltAngle = 5f; // 最大傾斜角
-    public float tiltSmooth = 100f; // 傾きの補間速度
+  public float moveSpeed = 50f;       // 前後移動速度
+    public float rotationSpeed = 80f;  // 回転速度
+    public float tiltAngle = 3f;      // 傾きの角度
+    public float verticalSpeed = 3f;   // 上下移動の速度
     private Rigidbody rb;
+    private List<string> LuggagesList = new List<string>();
+
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>(); // Rigidbodyを取得
     }
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal"); // A,D（左右回転）
-        float vertical = Input.GetAxis("Vertical");   // W,S（前後移動）
+        float moveInput = Input.GetAxis("Vertical"); // W/Sキー（前後移動）
+        float rotationInput = Input.GetAxis("Horizontal"); // A/Dキー（回転）
+        float verticalInput = 0f;
 
-        // **W/Sで前後移動**
-        Vector3 moveDirection = transform.forward * vertical;
-        rb.velocity = moveDirection * speed;
+        if (Input.GetKey(KeyCode.Space)) verticalInput = 1f;  // スペースキーで上昇
+        if (Input.GetKey(KeyCode.LeftShift)) verticalInput = -1f; // シフトキーで下降
 
-        // **A/Dで左右回転**
-        transform.Rotate(Vector3.up * horizontal * rotationSpeed * Time.deltaTime);
+        // 前後移動
+        Vector3 moveDirection = transform.forward * moveInput * moveSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + moveDirection);
 
+        // 左右回転
+        transform.Rotate(Vector3.up * rotationInput * rotationSpeed * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            this.transform.position += new Vector3(0, 0.1f, 0);
-        }
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            this.transform.position += new Vector3(0, -0.1f, 0);
-        }
-        // **傾きを計算**
-        float targetTiltX = Mathf.Clamp(vertical * tiltAngle, -tiltAngle, tiltAngle);
-        float targetTiltZ = Mathf.Clamp(-horizontal * tiltAngle, -tiltAngle, tiltAngle);
+        // 上下移動
+        Vector3 verticalMovement = Vector3.up * verticalInput * verticalSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + verticalMovement);
 
-        // **傾きの補間を適用**
-        Quaternion targetRotation = Quaternion.Euler(targetTiltX, transform.eulerAngles.y, targetTiltZ);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * tiltSmooth);
+        // 傾き（前後移動時のみ）
+        float targetTilt = moveInput * tiltAngle;
+        transform.rotation = Quaternion.Euler(targetTilt, transform.rotation.eulerAngles.y, 0);
     }
+
+
+    
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Arch"))
         {
             Debug.Log("アーチをくぐった！");
+            if (LuggagesList.Count >= 3)
+            {
+                Debug.Log("判定完了");
+                Global.ChangeScene("Result");
+            }
+
         }
-       
+       if (other.gameObject.CompareTag("luggage"))
+        {
+            string boxName = other.gameObject.name;
+            Debug.Log("触れた箱: " + boxName);
+
+            // すでにリストに入ってなければ追加する
+            if (!LuggagesList.Contains(boxName))
+            {
+                LuggagesList.Add(boxName);
+                Debug.Log("触れた箱: " + boxName);
+                Luggage luggage = other.gameObject.GetComponent<Luggage>();
+                if (luggage != null)
+                    {   
+                        luggage.GetLugggage(boxName);
+                    }
+
+            }
+
+        }
     
     }
     void OnCollisionEnter(Collision collision)
@@ -61,33 +85,7 @@ public class DroneController : MonoBehaviour
             rb.angularVelocity = Vector3.zero; // 接地時に回転の揺れを抑える
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // 地面にぶつかったときの縦方向の速度をゼロにする
         }
-     if (collision.gameObject.CompareTag("Goal"))
-        {
-            Global.ChangeScene("Result");
-        }
+        
 }
 
 }
-// float horizontal = Input.GetAxis("Horizontal"); // A,D
-//         float vertical = Input.GetAxis("Vertical"); // W,S
-
-//         // **移動処理：現在の向きに基づく**
-//         Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-//         rb.velocity = moveDirection * speed;
-
-//         if (Input.GetKey(KeyCode.D))
-//         {
-//             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime); 
-//         }
-//         if (Input.GetKey(KeyCode.A))
-//         {
-//             transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime); 
-//         }
-//         if (Input.GetKey(KeyCode.W))
-//         {
-//             transform.Rotate(Vector3.right * -rotationSpeed * Time.deltaTime); 
-//         }
-//         if (Input.GetKey(KeyCode.S))
-//         {
-//             transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime); 
-        // }
