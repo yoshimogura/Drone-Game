@@ -52,7 +52,7 @@ public class DroneController : MonoBehaviour
         {
             Debug.Log("アーチをくぐった！");
         }
-           if (other.gameObject.CompareTag("luggage"))
+        if (other.gameObject.CompareTag("luggage"))
         {
             string boxName = other.gameObject.name;
             Debug.Log("触れた箱: " + boxName);
@@ -64,13 +64,14 @@ public class DroneController : MonoBehaviour
                 Debug.Log("触れた箱: " + boxName);
                 Luggage luggage = other.gameObject.GetComponent<Luggage>();
                 if (luggage != null)
-                    {   
-                        luggage.GetLugggage(boxName);
-                    }
+                {
+                    luggage.GetLugggage(boxName);
+                }
 
             }
 
         }
+
     
     }
     void OnCollisionEnter(Collision collision)
