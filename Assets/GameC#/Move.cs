@@ -71,6 +71,19 @@ public class DroneController : MonoBehaviour
             }
 
         }
+        if (other.gameObject.name == "Spot")
+        {
+            string targetName = "荷物";
+            LuggagesList.RemoveAll(obj => obj == targetName);
+            foreach (string name in LuggagesList)
+                {
+                    Debug.Log(name);
+                }
+
+            
+           
+
+        }
 
     
     }
