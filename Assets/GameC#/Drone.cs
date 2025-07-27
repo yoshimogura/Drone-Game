@@ -11,6 +11,15 @@ public class DroneController : MonoBehaviour
     private Rigidbody rb;
     
     private List<string> LuggagesList = new List<string>();
+    public PropellerController controller1;
+    public PropellerController controller2;
+    public PropellerController controller3;
+    public PropellerController controller4;
+    bool wasMoving = false;
+    float transitionTimer = 0f;
+    public float takeOffDuration = 1.5f; // ゆっくり加速する時間
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -18,12 +27,58 @@ public class DroneController : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal"); // A,D（左右回転）
-        float vertical = Input.GetAxis("Vertical");   // W,S（前後移動）
+       float horizontal = Input.GetAxis("Horizontal");
+    float vertical = Input.GetAxis("Vertical");
+    Vector3 moveDirection = transform.forward * vertical;
+    rb.velocity = moveDirection * speed;
 
-        // **W/Sで前後移動**
-        Vector3 moveDirection = transform.forward * vertical;
-        rb.velocity = moveDirection * speed;
+    bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f;
+
+    // 状態管理
+    if (isMoving && !wasMoving)
+    {
+        // 移動開始（TakeOffへ）
+        transitionTimer = 0f;
+        controller1.SetState(PropellerController.State.TakingOff);
+        controller2.SetState(PropellerController.State.TakingOff);
+        controller3.SetState(PropellerController.State.TakingOff);
+        controller4.SetState(PropellerController.State.TakingOff);
+    }
+
+    if (isMoving)
+    {
+        transitionTimer += Time.deltaTime;
+        if (transitionTimer > takeOffDuration)
+        {
+            // 規定時間経過後、Flyingへ
+            controller1.SetState(PropellerController.State.Flying);
+            controller2.SetState(PropellerController.State.Flying);
+            controller3.SetState(PropellerController.State.Flying);
+            controller4.SetState(PropellerController.State.Flying);
+        }
+    }
+
+    if (!isMoving && wasMoving)
+    {
+        controller1.SetState(PropellerController.State.Landing);
+        controller2.SetState(PropellerController.State.Landing);
+        controller3.SetState(PropellerController.State.Landing);
+        controller4.SetState(PropellerController.State.Landing);
+    }
+
+    // プロペラが完全停止してからIdleへ
+    if (!isMoving && controller1.currentSpeed < 10f)
+    {
+        controller1.SetState(PropellerController.State.Idle);
+        controller2.SetState(PropellerController.State.Idle);
+        controller3.SetState(PropellerController.State.Idle);
+        controller4.SetState(PropellerController.State.Idle);
+    }
+
+
+    wasMoving = isMoving;
+
+        
 
         // **A/Dで左右回転**
         transform.Rotate(Vector3.up * horizontal * rotationSpeed * Time.deltaTime);
