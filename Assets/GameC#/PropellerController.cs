@@ -5,18 +5,26 @@ using UnityEngine;
 public class PropellerController : MonoBehaviour
 {
     public float currentSpeed = 0f;
-    public float maxSpeed = 1000f;
+    float maxSpeed = 5000f;
     public float acceleration = 500f;  // 毎秒どれだけ加速するか
-    public float deceleration = 700f;
+    float deceleration = 1800f;
     
     public enum State { Idle, TakingOff, Flying, Landing }
     public State currentState = State.Idle;
+    private Quaternion initialRotation;
 
+    // void Start()
+    // {
+    //     initialRotation = transform.rotation;
+    // }
     void Update()
     {
+        
         switch (currentState)
         {
-            case State.TakingOff:
+            case State.
+            TakingOff:
+
                 currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.deltaTime, maxSpeed);
                 break;
             case State.Flying:
@@ -24,9 +32,13 @@ public class PropellerController : MonoBehaviour
                 break;
             case State.Landing:
                 currentSpeed = Mathf.Max(currentSpeed - deceleration * Time.deltaTime, 0f);
+                // transform.rotation = Quaternion.RotateTowards(transform.rotation, initialRotation, 100f * Time.deltaTime);
+
                 break;
             case State.Idle:
                 currentSpeed = 0f;
+                // transform.rotation = initialRotation; // 最終的にしっかり揃える
+
                 break;
         }
 

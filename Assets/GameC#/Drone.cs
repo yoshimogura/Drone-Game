@@ -27,12 +27,14 @@ public class DroneController : MonoBehaviour
 
     void Update()
     {
-       float horizontal = Input.GetAxis("Horizontal");
-    float vertical = Input.GetAxis("Vertical");
-    Vector3 moveDirection = transform.forward * vertical;
-    rb.velocity = moveDirection * speed;
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 moveDirection = transform.forward * vertical;
+        rb.velocity = moveDirection * speed;
 
-    bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f;
+        bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f||Input.GetKey(KeyCode.Space) ||
+        Input.GetKey(KeyCode.LeftShift);
+
 
     // 状態管理
     if (isMoving && !wasMoving)
