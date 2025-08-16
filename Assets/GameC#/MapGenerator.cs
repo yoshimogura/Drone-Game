@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
@@ -9,15 +10,18 @@ public class MapGenerator : MonoBehaviour
     public GameObject buildingPrefab2;
     GameObject PutBuilding;
     Vector3 buildingSize;
+    
+        
+
 
     // Start is called before the first frame update
+
+
+
     void Start()
     {
-        if (buildingPrefab1 == null)
-        {
-            Debug.LogError("buildingPrefabが割り当てられていません。Inspectorから設定してください。");
-            return;
-        }
+        
+        
         
         for (int i = 0; i < 5; i++)
         {
@@ -29,14 +33,20 @@ public class MapGenerator : MonoBehaviour
             else
             {
                 PutBuilding = buildingPrefab2;
-                buildingSize = new Vector3(3f,3f,3f);
+                buildingSize = new Vector3(3f, 3f, 3f);
             }           
 
             float xPosition = (-2 + i) * 50f;
             Vector3 position = new Vector3(xPosition, 25, 30);
             GameObject building = Instantiate(PutBuilding, position, Quaternion.identity);
-            building.transform.localScale = buildingSize; //大きs調整
+            building.transform.localScale = buildingSize;
+            if (building.GetComponent<Collider>() == null)
+            {
+                building.AddComponent<MeshCollider>();
+            }
+
             RandomizeBuildingColor(building);
+
 
 
 
@@ -49,6 +59,8 @@ public class MapGenerator : MonoBehaviour
             {
                 PutBuilding = buildingPrefab1;
                 buildingSize = new Vector3(10f, 25f, 10f);
+                
+                
             }
             else
             {
@@ -56,10 +68,16 @@ public class MapGenerator : MonoBehaviour
                 buildingSize = new Vector3(3f, 3f, 3f);
             }         
             float xPosition = (-2 + i) * 50f;
-            Vector3 position = new Vector3(xPosition, 25, -30);
+            Vector3 position = new Vector3(xPosition, 25, 30);
             GameObject building = Instantiate(PutBuilding, position, Quaternion.identity);
-            building.transform.localScale =buildingSize; //大きさ調整
-            RandomizeBuildingColor(building);
+            building.transform.localScale = buildingSize;
+            if (building.GetComponent<Collider>() == null)
+            {
+                building.AddComponent<MeshCollider>();
+            }
+
+             RandomizeBuildingColor(building);
+
         }
         
     }
