@@ -6,10 +6,16 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    public GameObject buildingPrefab1; // Unityエディタからビル1のPrefabを割り当ててください
+    public GameObject buildingPrefab1;
     public GameObject buildingPrefab2;
+    public GameObject buildingPrefab3;
+    public GameObject streetLight;
+
     GameObject PutBuilding;
     Vector3 buildingSize;
+    float yPosition;
+    float zPosition;
+    float Randomcount;
     
         
 
@@ -20,66 +26,48 @@ public class MapGenerator : MonoBehaviour
 
     void Start()
     {
-        
-        
-        
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
         {
-            if (Random.value < 0.5f)
+            if (i == 1)
             {
-                PutBuilding = buildingPrefab1;
-                buildingSize = new Vector3(10f, 25f, 10f);
+                zPosition = 30;
             }
             else
             {
+                zPosition = -30;
+            }
+            for (int j = 0; j < 5; j++)
+        {
+           
+            Randomcount = Random.value;
+
+            if (Randomcount < 0.33f)
+            {
+                PutBuilding = buildingPrefab1;
+                yPosition = 25f;
+            }
+            else if (Randomcount < 0.66f)
+            {
                 PutBuilding = buildingPrefab2;
-                buildingSize = new Vector3(3f, 3f, 3f);
+                yPosition = 2.9f;
+            }
+            else
+            {
+                PutBuilding = buildingPrefab3;
+                yPosition = 2.9f;
             }           
 
-            float xPosition = (-2 + i) * 50f;
-            Vector3 position = new Vector3(xPosition, 25, 30);
+            float xPosition = (-2 + j) * 50f;
+            Vector3 position = new Vector3(xPosition, yPosition, zPosition);
             GameObject building = Instantiate(PutBuilding, position, Quaternion.identity);
-            building.transform.localScale = buildingSize;
             if (building.GetComponent<Collider>() == null)
             {
                 building.AddComponent<MeshCollider>();
             }
 
-            RandomizeBuildingColor(building);
-
-
-
-
         }
 
-        // 残りの5つをZ=-30ラインに生成
-        for (int i = 0; i < 5; i++)
-        {
-            if (Random.value < 0.5f)
-            {
-                PutBuilding = buildingPrefab1;
-                buildingSize = new Vector3(10f, 25f, 10f);
-                
-                
-            }
-            else
-            {
-                PutBuilding = buildingPrefab2;
-                buildingSize = new Vector3(3f, 3f, 3f);
-            }         
-            float xPosition = (-2 + i) * 50f;
-            Vector3 position = new Vector3(xPosition, 25, 30);
-            GameObject building = Instantiate(PutBuilding, position, Quaternion.identity);
-            building.transform.localScale = buildingSize;
-            if (building.GetComponent<Collider>() == null)
-            {
-                building.AddComponent<MeshCollider>();
-            }
-
-             RandomizeBuildingColor(building);
-
         }
-        
     }
 
     void RandomizeBuildingColor(GameObject building)
