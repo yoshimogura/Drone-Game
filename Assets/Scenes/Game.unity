@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingPrefab1: {fileID: 919132149155446097, guid: eef4bd3b7b91e484f9854efb90ccfefd, type: 3}
   buildingPrefab2: {fileID: 919132149155446097, guid: 03c54714fa3d53e4ba08f4125ff89dcc, type: 3}
-  buildingPrefab3: {fileID: 919132149155446097, guid: 709503ef06fe30048bc3db7b18bd39d2, type: 3}
+  buildingPrefab3: {fileID: 919132149155446097, guid: ba2302d61245ead4c9a144ab819d247b, type: 3}
   streetLight: {fileID: 919132149155446097, guid: 895459671dd848348971bfdebe872fc6, type: 3}
 --- !u!1 &249744860 stripped
 GameObject:
