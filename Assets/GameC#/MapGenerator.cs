@@ -16,15 +16,23 @@ public class MapGenerator : MonoBehaviour
     float yPosition;
     float zPosition;
     float Randomcount;
-    
-        
+
+
 
 
     // Start is called before the first frame update
-
-
-
     void Start()
+    {
+        Building();
+        StreetLight();
+    }
+    void Update()
+    {
+
+    }
+
+
+    void Building()
     {
         for (int i = 0; i < 2; i++)
         {
@@ -69,6 +77,10 @@ public class MapGenerator : MonoBehaviour
 
         }
     }
+    void StreetLight()
+    {
+        
+    }
 
     void RandomizeBuildingColor(GameObject building)
 {
@@ -86,12 +98,5 @@ public class MapGenerator : MonoBehaviour
     //     propBlock.SetColor("_Color", Color.HSVToRGB(h, s, v));
     //     renderer.SetPropertyBlock(propBlock);
     // }
-}
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+}   
 }
