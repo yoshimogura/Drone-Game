@@ -34,46 +34,59 @@ public class MapGenerator : MonoBehaviour
 
     void Building()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 4; i++)
         {
+            if (i == 0)
+            {
+                zPosition = 51f;
+                
+            }
+
             if (i == 1)
             {
-                zPosition = 30;
+                zPosition = -51.2f;
             }
-            else
+            if( i== 2)
             {
-                zPosition = -30;
+                zPosition = 100f;
+            }
+            if( i== 3)
+            {
+                zPosition = -100.0f;
             }
             for (int j = 0; j < 5; j++)
-        {
-           
-            Randomcount = Random.value;
+            {
+                if (j != 2)
+                {
+                    Randomcount = Random.value;
 
-            if (Randomcount < 0.33f)
-            {
-                PutBuilding = buildingPrefab1;
-                yPosition = 25f;
-            }
-            else if (Randomcount < 0.66f)
-            {
-                PutBuilding = buildingPrefab2;
-                yPosition = 2.9f;
-            }
-            else
-            {
-                PutBuilding = buildingPrefab3;
-                yPosition = 2.9f;
-            }           
+                    if (Randomcount < 0.33f)
+                    {
+                        PutBuilding = buildingPrefab1;
+                        yPosition = 25f;
+                    }
+                    else if (Randomcount < 0.66f)
+                    {
+                        PutBuilding = buildingPrefab2;
+                        yPosition = 2.9f;
+                    }
+                    else
+                    {
+                        PutBuilding = buildingPrefab3;
+                        yPosition = 2.9f;
+                    }
 
-            float xPosition = (-2 + j) * 50f;
-            Vector3 position = new Vector3(xPosition, yPosition, zPosition);
-            GameObject building = Instantiate(PutBuilding, position, Quaternion.identity);
-            if (building.GetComponent<Collider>() == null)
-            {
-                building.AddComponent<MeshCollider>();
-            }
+                    float xPosition = (-2 + j) * 50f;
+                    Vector3 position = new Vector3(xPosition, yPosition, zPosition);
+                    GameObject building = Instantiate(PutBuilding, position, Quaternion.identity);
+                    if (building.GetComponent<Collider>() == null)
+                    {
+                        building.AddComponent<MeshCollider>();
+                    }
+                }
 
-        }
+
+            }
 
         }
     }
