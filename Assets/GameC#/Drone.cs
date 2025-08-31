@@ -18,6 +18,7 @@ public class DroneController : MonoBehaviour
     bool wasMoving = false;
     float transitionTimer = 0f;
     public float takeOffDuration = 1.5f; // ゆっくり加速する時間
+    public Transform cargoAttachPoint; //ドローンの荷物つける場所
 
 
     void Start()
@@ -105,10 +106,6 @@ public class DroneController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Arch"))
-        {
-            Debug.Log("アーチをくぐった！");
-        }
         if (other.gameObject.CompareTag("luggage"))
         {
             string boxName = other.gameObject.name;
@@ -118,11 +115,22 @@ public class DroneController : MonoBehaviour
             if (!LuggagesList.Contains(boxName))
             {
                 LuggagesList.Add(boxName);
-                Debug.Log("触れた箱: " + boxName);
+                Debug.Log("触れた箱: " + boxName+"2");
                 Luggage luggage = other.gameObject.GetComponent<Luggage>();
                 if (luggage != null)
                 {
                     luggage.GetLugggage(boxName);
+                }
+                // 荷物をドローンの下にくっつける処理
+                other.transform.position = cargoAttachPoint.position;
+                other.transform.rotation = cargoAttachPoint.rotation;
+                other.transform.SetParent(cargoAttachPoint);
+                other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
+
+                Rigidbody rb = other.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.isKinematic = true; // 物理挙動を止める（ぶら下げるだけなら）
                 }
 
             }
