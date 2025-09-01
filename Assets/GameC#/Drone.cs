@@ -11,6 +11,8 @@ public class DroneController : MonoBehaviour
     private Rigidbody rb;
     
     private List<string> LuggagesList = new List<string>();
+    private List<string> CollectedLuggagesList = new List<string>();
+
     public PropellerController controller1;
     public PropellerController controller2;
     public PropellerController controller3;
@@ -112,38 +114,65 @@ public class DroneController : MonoBehaviour
             Debug.Log("触れた箱: " + boxName);
 
             // すでにリストに入ってなければ追加する
-            if (!LuggagesList.Contains(boxName))
+            if (LuggagesList.Count < 1)
             {
-                LuggagesList.Add(boxName);
-                Debug.Log("触れた箱: " + boxName+"2");
-                Luggage luggage = other.gameObject.GetComponent<Luggage>();
-                if (luggage != null)
+                if (!LuggagesList.Contains(boxName)&&!CollectedLuggagesList.Contains(boxName))
                 {
-                    luggage.GetLugggage(boxName);
-                }
-                // 荷物をドローンの下にくっつける処理
-                other.transform.position = cargoAttachPoint.position;
-                other.transform.rotation = cargoAttachPoint.rotation;
-                other.transform.SetParent(cargoAttachPoint);
-                other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
+                    LuggagesList.Add(boxName);
+                    Luggage luggage = other.gameObject.GetComponent<Luggage>();
+                    if (luggage != null)
+                    {
+                        luggage.GetLugggage(boxName);
+                    }
+                    // 荷物をドローンの下にくっつける処理
+                    other.transform.position = cargoAttachPoint.position;
+                    other.transform.rotation = cargoAttachPoint.rotation;
+                    other.transform.SetParent(cargoAttachPoint);
+                    if (boxName=="荷物") {
+                        other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
+                    }
+                    if (boxName=="財布") {
+                        other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
+                    }
+                    
 
-                Rigidbody rb = other.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.isKinematic = true; // 物理挙動を止める（ぶら下げるだけなら）
-                }
+                    Rigidbody rb = other.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.isKinematic = true; // 物理挙動を止める（ぶら下げるだけなら）
+                    }
 
+                }
             }
-
         }
         if (other.gameObject.name == "Spot")
         {
-            string targetName = "荷物";
-            LuggagesList.RemoveAll(obj => obj == targetName);
-            foreach (string name in LuggagesList)
+            if (LuggagesList.Count > 0)
+            {
+                string targetName = LuggagesList[0]; // 先頭の荷物を使う（必要ならループでもOK）
+
+                // シーン内から荷物オブジェクトを探す
+                GameObject cargo = GameObject.Find(targetName);
+                if (cargo != null)
                 {
-                    Debug.Log(name);
+                    // 荷物をSpotの位置に移動
+                    cargo.transform.position = other.transform.position + new Vector3(0, 0.5f, 0); // 少し浮かせると自然
+                    cargo.transform.SetParent(null); // ドローンから切り離す
+
+                    // 物理挙動を戻す（必要なら）
+                    Rigidbody rb = cargo.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.isKinematic = false;
+                    }
+
+                    // リストから削除
+                    LuggagesList.Remove(targetName);
+                    CollectedLuggagesList.Add(targetName);
+                    Debug.Log("荷物を置きました: " + targetName);
                 }
+            }
+
 
             
            
