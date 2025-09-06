@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class DroneController : MonoBehaviour
@@ -116,7 +118,7 @@ public class DroneController : MonoBehaviour
             // すでにリストに入ってなければ追加する
             if (LuggagesList.Count < 1)
             {
-                if (!LuggagesList.Contains(boxName)&&!CollectedLuggagesList.Contains(boxName))
+                if (!LuggagesList.Contains(boxName) && !CollectedLuggagesList.Contains(boxName))
                 {
                     LuggagesList.Add(boxName);
                     Luggage luggage = other.gameObject.GetComponent<Luggage>();
@@ -128,13 +130,15 @@ public class DroneController : MonoBehaviour
                     other.transform.position = cargoAttachPoint.position;
                     other.transform.rotation = cargoAttachPoint.rotation;
                     other.transform.SetParent(cargoAttachPoint);
-                    if (boxName=="荷物") {
+                    if (boxName == "荷物")
+                    {
                         other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
                     }
-                    if (boxName=="財布") {
+                    if (boxName == "財布")
+                    {
                         other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
                     }
-                    
+
 
                     Rigidbody rb = other.GetComponent<Rigidbody>();
                     if (rb != null)
@@ -149,14 +153,14 @@ public class DroneController : MonoBehaviour
         {
             if (LuggagesList.Count > 0)
             {
-                string targetName = LuggagesList[0]; // 先頭の荷物を使う（必要ならループでもOK）
+                string targetName = LuggagesList[0]; // 先頭の荷物を使う
 
                 // シーン内から荷物オブジェクトを探す
                 GameObject cargo = GameObject.Find(targetName);
                 if (cargo != null)
                 {
                     // 荷物をSpotの位置に移動
-                    cargo.transform.position = other.transform.position + new Vector3(0, 0.5f, 0); // 少し浮かせると自然
+                    cargo.transform.position = other.transform.position + new Vector3(1, 4.6f, 2); // 位置調整
                     cargo.transform.SetParent(null); // ドローンから切り離す
 
                     // 物理挙動を戻す（必要なら）
@@ -167,9 +171,19 @@ public class DroneController : MonoBehaviour
                     }
 
                     // リストから削除
+                    if (targetName == "荷物")
+                    {
+                        cargo.transform.localScale = new Vector3(0.14f, 0.36f, 1f);
+                    }
+                    else if (targetName == "財布")
+                    {
+                        cargo.transform.localScale = new Vector3(0.72f, 0.05f, 0.6f);
+                    }
+
                     LuggagesList.Remove(targetName);
                     CollectedLuggagesList.Add(targetName);
                     Debug.Log("荷物を置きました: " + targetName);
+                    
                 }
             }
 
