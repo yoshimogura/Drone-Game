@@ -113,7 +113,7 @@ public class DroneController : MonoBehaviour
         if (other.gameObject.CompareTag("luggage"))
         {
             string boxName = other.gameObject.name;
-            Debug.Log("触れた箱: " + boxName);
+            Debug.Log("取得したもの: " + boxName);
 
             // すでにリストに入ってなければ追加する
             if (LuggagesList.Count < 1)
