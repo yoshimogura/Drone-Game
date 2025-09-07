@@ -126,7 +126,13 @@ public class DroneController : MonoBehaviour
                     {
                         luggage.GetLugggage(boxName);
                     }
+                    Global player = GameObject.Find("Global").GetComponent<Global>();
+                    player.audioSource.Play();
+
+
+
                     // 荷物をドローンの下にくっつける処理
+
                     other.transform.position = cargoAttachPoint.position;
                     other.transform.rotation = cargoAttachPoint.rotation;
                     other.transform.SetParent(cargoAttachPoint);
