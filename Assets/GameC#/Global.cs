@@ -17,6 +17,7 @@ public class Global : MonoBehaviour
     void Update()
     {
 
+
     }
     public static void ChangeScene(string SceneName)
     {
