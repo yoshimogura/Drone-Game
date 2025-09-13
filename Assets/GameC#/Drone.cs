@@ -7,7 +7,7 @@ using UnityEngine;
 public class DroneController : MonoBehaviour
 {
     float rotationSpeed = 50f;
-    float speed = 30f;
+    float speed = 50f;
     public float tiltAngle = 5f; // 最大傾斜角
     public float tiltSmooth = 100f; // 傾きの補間速度
     private Rigidbody rb;
@@ -211,26 +211,3 @@ public class DroneController : MonoBehaviour
 }
 
 }
-// float horizontal = Input.GetAxis("Horizontal"); // A,D
-//         float vertical = Input.GetAxis("Vertical"); // W,S
-
-//         // **移動処理：現在の向きに基づく**
-//         Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-//         rb.velocity = moveDirection * speed;
-
-//         if (Input.GetKey(KeyCode.D))
-//         {
-//             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime); 
-//         }
-//         if (Input.GetKey(KeyCode.A))
-//         {
-//             transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime); 
-//         }
-//         if (Input.GetKey(KeyCode.W))
-//         {
-//             transform.Rotate(Vector3.right * -rotationSpeed * Time.deltaTime); 
-//         }
-//         if (Input.GetKey(KeyCode.S))
-//         {
-//             transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime); 
-        // }
