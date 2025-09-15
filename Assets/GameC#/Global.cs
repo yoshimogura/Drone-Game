@@ -7,10 +7,22 @@ public class Global : MonoBehaviour
 {
     // Start is called before the first frame update
     public AudioSource audioSource;
+    public GameObject targetParent;
+
+
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        foreach (Transform child in targetParent.transform)
+        {
+            if (child.GetComponent<MeshFilter>() != null)
+            {
+                MeshCollider collider = child.gameObject.AddComponent<MeshCollider>();
+                collider.convex = false; 
+            }
+        }
+
     }
 
     // Update is called once per frame

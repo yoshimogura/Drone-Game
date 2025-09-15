@@ -7,7 +7,7 @@ using UnityEngine;
 public class DroneController : MonoBehaviour
 {
     float rotationSpeed = 50f;
-    float speed = 50f;
+    float speed = 45f;
     public float tiltAngle = 5f; // 最大傾斜角
     public float tiltSmooth = 100f; // 傾きの補間速度
     private Rigidbody rb;
