@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Goal
   - luggage
+  - LuggageEffect
   layers:
   - Default
   - TransparentFX

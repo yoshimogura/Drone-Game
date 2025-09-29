@@ -26,11 +26,9 @@ public class carMove : MonoBehaviour
         {
             case 1:
                 agent.SetDestination(target1.position); // 目的地を設定
-                Debug.Log("first");
                 break;
             case 2:
                 agent.SetDestination(target2.position);
-                Debug.Log("second");
                 break;
             case 3:
                 agent.SetDestination(target3.position);

@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class DroneController : MonoBehaviour
 {
-    float rotationSpeed = 50f;
-    float speed = 45f;
+    float rotationSpeed = 55f;
+    float speed = 40f;
     public float tiltAngle = 5f; // 最大傾斜角
     public float tiltSmooth = 100f; // 傾きの補間速度
     private Rigidbody rb;
@@ -151,9 +151,21 @@ public class DroneController : MonoBehaviour
                     {
                         rb.isKinematic = true; // 物理挙動を止める（ぶら下げるだけなら）
                     }
+                    foreach (Transform child in other.GetComponentsInChildren<Transform>(true))
+                    {
+                        if (child.CompareTag("LuggageEffect"))
+                        {
+                            Destroy(child.gameObject);
+                        }
+                    }
+
+
 
                 }
             }
+            
+
+
         }
         if (other.gameObject.name == "Spot")
         {
@@ -166,7 +178,7 @@ public class DroneController : MonoBehaviour
                 if (cargo != null)
                 {
                     // 荷物をSpotの位置に移動
-                    cargo.transform.position = other.transform.position + new Vector3(1, 4.6f, 2); // 位置調整
+                    cargo.transform.position = other.transform.position + new Vector3(1, 3.5f, 2); // 位置調整
                     cargo.transform.SetParent(null); // ドローンから切り離す
 
                     // 物理挙動を戻す（必要なら）
@@ -179,7 +191,7 @@ public class DroneController : MonoBehaviour
                     // リストから削除
                     if (targetName == "荷物")
                     {
-                        cargo.transform.localScale = new Vector3(0.14f, 0.36f, 1f);
+                        cargo.transform.localScale = new Vector3(0.14f, 0.25f, 1f);
                     }
                     else if (targetName == "財布")
                     {
@@ -202,12 +214,13 @@ public class DroneController : MonoBehaviour
     
     }
     void OnCollisionEnter(Collision collision)
-{
-    if (collision.gameObject.CompareTag("Ground"))
     {
-        rb.angularVelocity = Vector3.zero; // 接地時に回転の揺れを抑える
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // 地面にぶつかったときの縦方向の速度をゼロにする
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            rb.angularVelocity = Vector3.zero; // 接地時に回転の揺れを抑える
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); // 地面にぶつかったときの縦方向の速度をゼロにする
+        }
     }
-}
+
 
 }
