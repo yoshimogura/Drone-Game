@@ -150,14 +150,28 @@ public class DroneController : MonoBehaviour
                     other.transform.position = cargoAttachPoint.position;
                     other.transform.rotation = cargoAttachPoint.rotation;
                     other.transform.SetParent(cargoAttachPoint);
-                    if (boxName == "荷物 2(Clone)")
+                    Dictionary<string, Vector3> scaleMap = new Dictionary<string, Vector3>()
                     {
-                        other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
-                    }
-                    if (boxName == "財布(Clone)")
+                        { "荷物 2(Clone)", new Vector3(0.07f, 0.18f, 0.5f) },
+                        { "財布(Clone)", new Vector3(0.4f, 0.09f, 0.25f) },
+                        { "スマホ(Clone)", new Vector3(0.4f, 0.09f, 0.25f) }
+                    };
+                    if (scaleMap.ContainsKey(boxName))
                     {
-                        other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
+                        other.transform.localScale = scaleMap[boxName];
                     }
+                    // if (boxName == "荷物 2(Clone)")
+                    // {
+                    //     other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
+                    // }
+                    // if (boxName == "財布(Clone)")
+                    // {
+                    //     other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
+                    // }
+                    // if (boxName == "スマホ(Clone)")
+                    // {
+                    //     other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
+                    // }
 
 
                     Rigidbody rb = other.GetComponent<Rigidbody>();
@@ -172,7 +186,7 @@ public class DroneController : MonoBehaviour
                             Destroy(child.gameObject);
                         }
                     }
-                    globalScript.SpawnNextPackage();
+                    
 
 
                 }
@@ -192,7 +206,7 @@ public class DroneController : MonoBehaviour
                 if (cargo != null)
                 {
                     // 荷物をSpotの位置に移動
-                    cargo.transform.position = other.transform.position + new Vector3(1, 3.5f, 2); // 位置調整
+                    cargo.transform.position = other.transform.position + new Vector3(1, 5f, 2); // 位置調整
                     cargo.transform.SetParent(null); // ドローンから切り離す
 
                     // 物理挙動を戻す（必要なら）
@@ -203,11 +217,11 @@ public class DroneController : MonoBehaviour
                     }
 
                     // リストから削除
-                    if (targetName == "荷物")
+                    if (targetName == "荷物 2(Clone)")
                     {
                         cargo.transform.localScale = new Vector3(0.14f, 0.25f, 1f);
                     }
-                    else if (targetName == "財布")
+                    else if (targetName == "財布(Clone)")
                     {
                         cargo.transform.localScale = new Vector3(0.72f, 0.05f, 0.6f);
                     }
@@ -215,7 +229,7 @@ public class DroneController : MonoBehaviour
                     LuggagesList.Remove(targetName);
                     CollectedLuggagesList.Add(targetName);
                     Debug.Log("荷物を置きました: " + targetName);
-                    Global.fase++;
+                    globalScript.SpawnNextPackage();
                 }
             }
 
