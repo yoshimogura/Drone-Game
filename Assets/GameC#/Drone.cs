@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 
 public class DroneController : MonoBehaviour
 {
@@ -23,11 +24,24 @@ public class DroneController : MonoBehaviour
     float transitionTimer = 0f;
     public float takeOffDuration = 1.5f; // ゆっくり加速する時間
     public Transform cargoAttachPoint; //ドローンの荷物つける場所
+    private Global globalScript;
 
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        GameObject globalObj = GameObject.Find("Global");
+        if (globalObj != null)
+        {
+            globalScript = globalObj.GetComponent<Global>();
+        }
+        else
+        {
+            Debug.LogError("Global オブジェクトが見つかりません");
+        }
+
     }
 
     void Update()
@@ -136,11 +150,11 @@ public class DroneController : MonoBehaviour
                     other.transform.position = cargoAttachPoint.position;
                     other.transform.rotation = cargoAttachPoint.rotation;
                     other.transform.SetParent(cargoAttachPoint);
-                    if (boxName == "荷物")
+                    if (boxName == "荷物 2(Clone)")
                     {
                         other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
                     }
-                    if (boxName == "財布")
+                    if (boxName == "財布(Clone)")
                     {
                         other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
                     }
@@ -158,7 +172,7 @@ public class DroneController : MonoBehaviour
                             Destroy(child.gameObject);
                         }
                     }
-
+                    globalScript.SpawnNextPackage();
 
 
                 }
@@ -201,7 +215,7 @@ public class DroneController : MonoBehaviour
                     LuggagesList.Remove(targetName);
                     CollectedLuggagesList.Add(targetName);
                     Debug.Log("荷物を置きました: " + targetName);
-                    
+                    Global.fase++;
                 }
             }
 
