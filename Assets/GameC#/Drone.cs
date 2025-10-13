@@ -191,8 +191,6 @@ public class DroneController : MonoBehaviour
 
                 }
             }
-            
-
 
         }
         if (other.gameObject.name == "Spot")
@@ -215,20 +213,22 @@ public class DroneController : MonoBehaviour
                     {
                         rb.isKinematic = false;
                     }
+                    Dictionary<string, Vector3> scaleMap = new Dictionary<string, Vector3>
+                    {
+                        { "荷物 2(Clone)", new Vector3(0.14f, 0.36f, 1f) },
+                        { "財布(Clone)",   new Vector3(0.72f, 0.05f, 0.6f) },
+                        { "スマホ(Clone)", new Vector3(1f, 1f, 1f) }
+                    };
+                    if (scaleMap.ContainsKey(targetName))
+                    {
+                            cargo.transform.localScale = scaleMap[targetName];
+                    }
 
-                    // リストから削除
-                    if (targetName == "荷物 2(Clone)")
-                    {
-                        cargo.transform.localScale = new Vector3(0.14f, 0.25f, 1f);
-                    }
-                    else if (targetName == "財布(Clone)")
-                    {
-                        cargo.transform.localScale = new Vector3(0.72f, 0.05f, 0.6f);
-                    }
+
 
                     LuggagesList.Remove(targetName);
                     CollectedLuggagesList.Add(targetName);
-                    Debug.Log("荷物を置きました: " + targetName);
+                    Debug.Log("荷物を置いた: " + targetName);
                     globalScript.SpawnNextPackage();
                 }
             }

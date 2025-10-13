@@ -5720,7 +5720,7 @@ Transform:
   m_GameObject: {fileID: 1673052758}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -175.8, y: -10.69, z: -340.9}
+  m_LocalPosition: {x: 6.4, y: -10.69, z: -4.8}
   m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6262,7 +6262,7 @@ MonoBehaviour:
   targetParent: {fileID: 919132149155446097, guid: 8f7579ac1c76c9b4d992f542aa59c019, type: 3}
   lugagge1: {fileID: 919132149155446097, guid: 8f7579ac1c76c9b4d992f542aa59c019, type: 3}
   lugagge2: {fileID: 919132149155446097, guid: f6ca86fac4274a3428ad6fe206427157, type: 3}
-  lugagge3: {fileID: 919132149155446097, guid: c57819e9e76256546bf784df03d3115e, type: 3}
+  lugagge3: {fileID: 919132149155446097, guid: 8a3c1a8ed72686c44a38e4cf4af99e33, type: 3}
   spawnPosition: {x: 0, y: 0, z: 0}
   packages: []
 --- !u!4 &2142467303
