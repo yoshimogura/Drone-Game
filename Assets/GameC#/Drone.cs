@@ -193,46 +193,46 @@ public class DroneController : MonoBehaviour
             }
 
         }
-        if (other.gameObject.name == "Spot")
+        if (globalScript != null && LuggagesList.Count > 0)
         {
-            if (LuggagesList.Count > 0)
+            Package currentPackage = globalScript.packages[Global.fase - 1]; 
+            if (other.gameObject == currentPackage.place)
             {
-                string targetName = LuggagesList[0]; // 先頭の荷物を使う
 
-                // シーン内から荷物オブジェクトを探す
-                GameObject cargo = GameObject.Find(targetName);
-                if (cargo != null)
+
+                if (LuggagesList.Count > 0)
                 {
-                    // 荷物をSpotの位置に移動
-                    cargo.transform.position = other.transform.position + new Vector3(1, 5f, 2); // 位置調整
-                    cargo.transform.SetParent(null); // ドローンから切り離す
-
-                    // 物理挙動を戻す（必要なら）
-                    Rigidbody rb = cargo.GetComponent<Rigidbody>();
-                    if (rb != null)
+                    string targetName = LuggagesList[0]; // 先頭の荷物
+                    GameObject cargo = GameObject.Find(targetName);
+                    if (cargo != null)
                     {
-                        rb.isKinematic = false;
-                    }
-                    Dictionary<string, Vector3> scaleMap = new Dictionary<string, Vector3>
+                        cargo.transform.position = other.transform.position + new Vector3(1, 5f, 2); // 位置調整
+                        cargo.transform.SetParent(null); // ドローンから切り離す
+                        Rigidbody rb = cargo.GetComponent<Rigidbody>();
+                        if (rb != null)
+                        {
+                            rb.isKinematic = false;
+                        }
+                        Dictionary<string, Vector3> scaleMap = new Dictionary<string, Vector3>
                     {
                         { "荷物 2(Clone)", new Vector3(0.14f, 0.36f, 1f) },
                         { "財布(Clone)",   new Vector3(0.72f, 0.05f, 0.6f) },
                         { "スマホ(Clone)", new Vector3(1f, 1f, 1f) }
                     };
-                    if (scaleMap.ContainsKey(targetName))
-                    {
+                        if (scaleMap.ContainsKey(targetName))
+                        {
                             cargo.transform.localScale = scaleMap[targetName];
+                        }
+
+
+
+                        LuggagesList.Remove(targetName);
+                        CollectedLuggagesList.Add(targetName);
+                        Debug.Log("荷物を置いた: " + targetName);
+                        globalScript.SpawnNextPackage();
                     }
-
-
-
-                    LuggagesList.Remove(targetName);
-                    CollectedLuggagesList.Add(targetName);
-                    Debug.Log("荷物を置いた: " + targetName);
-                    globalScript.SpawnNextPackage();
                 }
             }
-
 
             
            
