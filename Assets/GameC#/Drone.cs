@@ -124,6 +124,7 @@ public class DroneController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("当たった");
         if (other.gameObject.CompareTag("luggage"))
         {
             string boxName = other.gameObject.name;
@@ -195,10 +196,11 @@ public class DroneController : MonoBehaviour
         }
         if (globalScript != null && LuggagesList.Count > 0)
         {
+            
             Package currentPackage = globalScript.packages[Global.fase - 1]; 
-            if (other.gameObject == currentPackage.place)
+            if (other.gameObject.CompareTag("Spot"))
             {
-
+                Debug.Log("配達場所来た");
 
                 if (LuggagesList.Count > 0)
                 {

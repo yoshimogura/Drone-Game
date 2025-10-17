@@ -10,12 +10,14 @@ public class Package
     public GameObject item;
     public Vector3 position;
     public GameObject place;
+    public Vector3 position2;
 
-    public Package(GameObject item, Vector3 position, GameObject place)
+    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2) 
     {
         this.item = item;
         this.place = place;
         this.position = position;
+        this.position2 = position2;
     }
 }
 
@@ -31,9 +33,7 @@ public class Global : MonoBehaviour
     public GameObject lugagge1;
     public GameObject lugagge2;
     public GameObject lugagge3;
-    public GameObject Spot1;
-    public GameObject Spot2;
-    public GameObject Spot3;
+    public GameObject Spot;
 
     public Vector3 spawnPosition = new Vector3(36, 0, 21);
     public static int fase = 0;
@@ -43,9 +43,9 @@ public class Global : MonoBehaviour
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(10, 20, 5),Spot1);
-        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3),Spot2);
-        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8),Spot3);
+        packages[0] = new Package(lugagge1, new Vector3(10, 20, 5),Spot,new Vector3(10, 5, 5));
+        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3),Spot,new Vector3(20, 5, -3));
+        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8),Spot,new Vector3(20, 5, -3));
 
         audioSource = GetComponent<AudioSource>();
 
@@ -65,11 +65,12 @@ public class Global : MonoBehaviour
     {
         if (fase >= packages.Length)
         {
-            Debug.Log("すべての荷物を配置済み");
+            Debug.Log("すべての荷物と配達地点を配置済み");
             return;
         }
 
         GameObject prefab = packages[fase].item;
+        GameObject prefab2 = packages[fase].place;
 
         if (prefab == null)
         {
@@ -79,6 +80,7 @@ public class Global : MonoBehaviour
 
         // プレハブからインスタンスを生成
         GameObject obj = Instantiate(prefab, packages[fase].position, Quaternion.identity);
+        GameObject spot =Instantiate(prefab2, packages[fase].position2, Quaternion.identity);
         
         // RigidbodyとBoxColliderを追加
         if (obj.GetComponent<Rigidbody>() == null)
@@ -87,11 +89,11 @@ public class Global : MonoBehaviour
             obj.AddComponent<BoxCollider>();
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         BoxCollider boxCollider = obj.GetComponent<BoxCollider>();
-
         rb.useGravity = false; // ← ここで重力をオフにする
         rb.isKinematic = true;
         boxCollider.isTrigger = true;
         obj.tag = "luggage";
+        spot.tag = "Spot";
 
         fase++;
 
