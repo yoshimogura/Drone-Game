@@ -37,15 +37,14 @@ public class Global : MonoBehaviour
 
     public Vector3 spawnPosition = new Vector3(36, 0, 21);
     public static int fase = 0;
-
     public Package[] packages;
 
     void Start()
     {
         packages = new Package[3];
         packages[0] = new Package(lugagge1, new Vector3(10, 20, 5),Spot,new Vector3(10, 5, 5));
-        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3),Spot,new Vector3(20, 5, -3));
-        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8),Spot,new Vector3(20, 5, -3));
+        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3),Spot,new Vector3(-67, -10, -219));
+        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8),Spot,new Vector3(251, -10, -91));
 
         audioSource = GetComponent<AudioSource>();
 
@@ -58,11 +57,18 @@ public class Global : MonoBehaviour
             }
         }
 
-        SpawnNextPackage(); // 最初の1つを配置
+        StartCoroutine(SpawnNextPackage(0f)); // 最初の1つを配置
+    }
+    public void SpawnNextPackageDelayed(float delaySeconds)
+    {
+        StartCoroutine(SpawnNextPackage(delaySeconds));
     }
 
-    public void SpawnNextPackage()
+    public IEnumerator  SpawnNextPackage(float delay)
+
     {
+        yield return new WaitForSeconds(delay);
+
        foreach (GameObject DeleteObj in GameObject.FindGameObjectsWithTag("luggage"))
         {
             Destroy(DeleteObj);
@@ -77,7 +83,7 @@ public class Global : MonoBehaviour
         if (fase >= packages.Length)
         {
             Debug.Log("すべての荷物と配達地点を配置済み");
-            return;
+            yield break;
         }
 
         GameObject prefab = packages[fase].item;
@@ -86,7 +92,7 @@ public class Global : MonoBehaviour
         if (prefab == null)
         {
             Debug.LogError($"packages[{fase}].item が null です");
-            return;
+            yield break;
         }
 
         // プレハブからインスタンスを生成

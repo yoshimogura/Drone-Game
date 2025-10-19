@@ -231,7 +231,7 @@ public class DroneController : MonoBehaviour
                         LuggagesList.Remove(targetName);
                         CollectedLuggagesList.Add(targetName);
                         Debug.Log("荷物を置いた: " + targetName);
-                        globalScript.SpawnNextPackage();
+                        globalScript.SpawnNextPackageDelayed(3f);
                     }
                 }
             }
