@@ -42,7 +42,7 @@ public class Global : MonoBehaviour
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(10, 20, 5),Spot,new Vector3(10, 5, 5));
+        packages[0] = new Package(lugagge1, new Vector3(10, 20, 5),Spot,new Vector3(10, -10, 5));
         packages[1] = new Package(lugagge2, new Vector3(20, 20, -3),Spot,new Vector3(-67, -10, -219));
         packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8),Spot,new Vector3(251, -10, -91));
 
