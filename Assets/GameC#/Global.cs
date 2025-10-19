@@ -63,6 +63,17 @@ public class Global : MonoBehaviour
 
     public void SpawnNextPackage()
     {
+       foreach (GameObject DeleteObj in GameObject.FindGameObjectsWithTag("luggage"))
+        {
+            Destroy(DeleteObj);
+        }
+
+        foreach (GameObject DeleteSpotObj in GameObject.FindGameObjectsWithTag("Spot"))
+        {
+            Destroy(DeleteSpotObj);
+        }
+
+
         if (fase >= packages.Length)
         {
             Debug.Log("すべての荷物と配達地点を配置済み");

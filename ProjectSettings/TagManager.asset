@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - luggage
   - LuggageEffect
+  - Spot
   layers:
   - Default
   - TransparentFX
