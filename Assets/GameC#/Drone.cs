@@ -25,6 +25,7 @@ public class DroneController : MonoBehaviour
     public float takeOffDuration = 1.5f; // ゆっくり加速する時間
     public Transform cargoAttachPoint; //ドローンの荷物つける場所
     private Global globalScript;
+    public float battery = 0;
 
     
 
@@ -197,7 +198,7 @@ public class DroneController : MonoBehaviour
         if (globalScript != null && LuggagesList.Count > 0)
         {
             
-            Package currentPackage = globalScript.packages[Global.fase - 1]; 
+            Package currentPackage = globalScript.packages[Global.phase - 1]; 
             if (other.gameObject.CompareTag("Spot"))
             {
                 Debug.Log("配達場所来た");
@@ -217,9 +218,9 @@ public class DroneController : MonoBehaviour
                         }
                         Dictionary<string, Vector3> scaleMap = new Dictionary<string, Vector3>
                     {
-                        { "荷物 2(Clone)", new Vector3(0.14f, 0.36f, 1f) },
-                        { "財布(Clone)",   new Vector3(0.72f, 0.05f, 0.6f) },
-                        { "スマホ(Clone)", new Vector3(1f, 1f, 1f) }
+                        { "New荷物(Clone)", new Vector3(0.14f, 0.36f, 1f) },
+                        { "New財布(Clone)",   new Vector3(0.72f, 0.05f, 0.6f) },
+                        { "Newスマホ(Clone)", new Vector3(1f, 1f, 1f) }
                     };
                         if (scaleMap.ContainsKey(targetName))
                         {

@@ -309,6 +309,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81eab98811424a640bf53d09da45258b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &235331819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a23b303da9c6c441840546804ef8539, type: 3}
+  m_PrefabInstance: {fileID: 1714698551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &649706578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5601181252373382449, guid: 4a23b303da9c6c441840546804ef8539, type: 3}
@@ -861,6 +866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u9053\u8DEF 1"
       objectReference: {fileID: 0}
+    - target: {fileID: 1889003057716489450, guid: 4a23b303da9c6c441840546804ef8539, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 46.4
+      objectReference: {fileID: 0}
     - target: {fileID: 4634415464488207213, guid: 4a23b303da9c6c441840546804ef8539, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.62
@@ -1308,10 +1317,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2142467304}
-  targetParent: {fileID: 919132149155446097, guid: 8f7579ac1c76c9b4d992f542aa59c019, type: 3}
-  lugagge1: {fileID: 919132149155446097, guid: 8f7579ac1c76c9b4d992f542aa59c019, type: 3}
-  lugagge2: {fileID: 919132149155446097, guid: f6ca86fac4274a3428ad6fe206427157, type: 3}
-  lugagge3: {fileID: 919132149155446097, guid: 8a3c1a8ed72686c44a38e4cf4af99e33, type: 3}
+  targetParent: {fileID: 235331819}
+  lugagge1: {fileID: 7822742050560792954, guid: 5f7a2e5852552fb46bb4674cb831b06e, type: 3}
+  lugagge2: {fileID: 5326502000980783181, guid: 6c13b512869e7e3429475a9a8fb39513, type: 3}
+  lugagge3: {fileID: 8087089342333627884, guid: 3f6c83fe9d8e3534a9303e483d2cefe6, type: 3}
   Spot: {fileID: 8465095173027559145, guid: 11cf7e6ffecddd94d887f88265d372fb, type: 3}
   spawnPosition: {x: 0, y: 0, z: 0}
   packages: []

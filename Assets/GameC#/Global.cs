@@ -12,13 +12,14 @@ public class Package
     public GameObject place;
     public Vector3 position2;
 
-    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2) 
+    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2)
     {
         this.item = item;
         this.place = place;
         this.position = position;
         this.position2 = position2;
     }
+    
 }
 
 
@@ -36,13 +37,13 @@ public class Global : MonoBehaviour
     public GameObject Spot;
 
     public Vector3 spawnPosition = new Vector3(36, 0, 21);
-    public static int fase = 0;
+    public static int phase = 0;
     public Package[] packages;
 
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(10, 20, 5),Spot,new Vector3(10, -10, 5));
+        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5),Spot,new Vector3(10, -10, 5));
         packages[1] = new Package(lugagge2, new Vector3(20, 20, -3),Spot,new Vector3(-67, -10, -219));
         packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8),Spot,new Vector3(251, -10, -91));
 
@@ -80,24 +81,24 @@ public class Global : MonoBehaviour
         }
 
 
-        if (fase >= packages.Length)
+        if (phase >= packages.Length)
         {
             Debug.Log("すべての荷物と配達地点を配置済み");
             yield break;
         }
 
-        GameObject prefab = packages[fase].item;
-        GameObject prefab2 = packages[fase].place;
+        GameObject prefab = packages[phase].item;
+        GameObject prefab2 = packages[phase].place;
 
         if (prefab == null)
         {
-            Debug.LogError($"packages[{fase}].item が null です");
+            Debug.LogError($"packages[{phase}].item が null です");
             yield break;
         }
 
         // プレハブからインスタンスを生成
-        GameObject obj = Instantiate(prefab, packages[fase].position, Quaternion.identity);
-        GameObject spot =Instantiate(prefab2, packages[fase].position2, Quaternion.identity);
+        GameObject obj = Instantiate(prefab, packages[phase].position, Quaternion.identity);
+        GameObject spot =Instantiate(prefab2, packages[phase].position2, Quaternion.identity);
         // RigidbodyとBoxColliderを追加
         if (obj.GetComponent<Rigidbody>() == null)
             obj.AddComponent<Rigidbody>();
@@ -111,7 +112,7 @@ public class Global : MonoBehaviour
         obj.tag = "luggage";
         spot.tag = "Spot";
 
-        fase++;
+        phase++;
 
     }
 
