@@ -98,7 +98,6 @@ public class Global : MonoBehaviour
         // プレハブからインスタンスを生成
         GameObject obj = Instantiate(prefab, packages[fase].position, Quaternion.identity);
         GameObject spot =Instantiate(prefab2, packages[fase].position2, Quaternion.identity);
-        
         // RigidbodyとBoxColliderを追加
         if (obj.GetComponent<Rigidbody>() == null)
             obj.AddComponent<Rigidbody>();
