@@ -25,7 +25,8 @@ public class DroneController : MonoBehaviour
     public float takeOffDuration = 1.5f; // ゆっくり加速する時間
     public Transform cargoAttachPoint; //ドローンの荷物つける場所
     private Global globalScript;
-    public float battery = 0;
+    public float RemainingBattery = 100;
+    
 
     
 
@@ -69,6 +70,7 @@ public class DroneController : MonoBehaviour
 
     if (isMoving)
     {
+            RemainingBattery-=0.05f;
         transitionTimer += Time.deltaTime;
         if (transitionTimer > takeOffDuration)
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Package
@@ -35,17 +37,19 @@ public class Global : MonoBehaviour
     public GameObject lugagge2;
     public GameObject lugagge3;
     public GameObject Spot;
+    public TextMeshProUGUI batteryText;
 
     public Vector3 spawnPosition = new Vector3(36, 0, 21);
     public static int phase = 0;
     public Package[] packages;
+    public GameObject battery;
 
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5),Spot,new Vector3(10, -10, 5));
-        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3),Spot,new Vector3(-67, -10, -219));
-        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8),Spot,new Vector3(251, -10, -91));
+        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(10, -10, 5));
+        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219));
+        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8), Spot, new Vector3(251, -10, -91));
 
         audioSource = GetComponent<AudioSource>();
 
@@ -59,6 +63,11 @@ public class Global : MonoBehaviour
         }
 
         StartCoroutine(SpawnNextPackage(0f)); // 最初の1つを配置
+    }
+    void Update()
+    {
+        DroneController drone = GameObject.Find("drone 2").GetComponent<DroneController>();
+        batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString()+"%";//切り上げてテキストに表示
     }
     public void SpawnNextPackageDelayed(float delaySeconds)
     {
