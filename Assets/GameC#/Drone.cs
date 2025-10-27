@@ -163,18 +163,6 @@ public class DroneController : MonoBehaviour
                     {
                         other.transform.localScale = scaleMap[boxName];
                     }
-                    // if (boxName == "荷物 2(Clone)")
-                    // {
-                    //     other.transform.localScale = new Vector3(0.07f, 0.18f, 0.5f);
-                    // }
-                    // if (boxName == "財布(Clone)")
-                    // {
-                    //     other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
-                    // }
-                    // if (boxName == "スマホ(Clone)")
-                    // {
-                    //     other.transform.localScale = new Vector3(0.4f, 0.09f, 0.25f);
-                    // }
 
 
                     Rigidbody rb = other.GetComponent<Rigidbody>();
