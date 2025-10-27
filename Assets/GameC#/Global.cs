@@ -13,13 +13,17 @@ public class Package
     public Vector3 position;
     public GameObject place;
     public Vector3 position2;
+    public GameObject SetBattery;
+    public Vector3 SetBatteryPosition;
 
-    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2)
+    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2,GameObject SetBattery,Vector3 SetBatteryPosition)
     {
         this.item = item;
         this.place = place;
         this.position = position;
         this.position2 = position2;
+        this.SetBattery = SetBattery;
+        this.SetBatteryPosition = SetBatteryPosition;
     }
     
 }
@@ -41,15 +45,20 @@ public class Global : MonoBehaviour
 
     public Vector3 spawnPosition = new Vector3(36, 0, 21);
     public static int phase = 0;
-    public Package[] packages;
     public GameObject battery;
+    public Package[] packages;
+    private DroneController drone;
+
 
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(10, -10, 5));
-        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219));
-        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8), Spot, new Vector3(251, -10, -91));
+        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(10, -10, 5),battery,new Vector3(12, 10, 6));
+        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(12, 10, 6));
+        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(12, 10, 6));
+        
+        
+        drone = GameObject.Find("drone 2").GetComponent<DroneController>();
 
         audioSource = GetComponent<AudioSource>();
 
@@ -66,8 +75,11 @@ public class Global : MonoBehaviour
     }
     void Update()
     {
-        DroneController drone = GameObject.Find("drone 2").GetComponent<DroneController>();
-        batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString()+"%";//切り上げてテキストに表示
+        batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString() + "%";//切り上げてテキストに表示
+        if (drone.RemainingBattery <= 0)
+        {
+            Debug.Log("バッテリー切れだよ")
+;        }
     }
     public void SpawnNextPackageDelayed(float delaySeconds)
     {
@@ -88,16 +100,18 @@ public class Global : MonoBehaviour
         {
             Destroy(DeleteSpotObj);
         }
+        DeleteBattery();
 
 
         if (phase >= packages.Length)
         {
-            Debug.Log("すべての荷物と配達地点を配置済み");
+            Debug.Log("すべての物たちを配置済み");
             yield break;
         }
 
         GameObject prefab = packages[phase].item;
         GameObject prefab2 = packages[phase].place;
+        GameObject prefab3 = packages[phase].SetBattery;
 
         if (prefab == null)
         {
@@ -107,7 +121,8 @@ public class Global : MonoBehaviour
 
         // プレハブからインスタンスを生成
         GameObject obj = Instantiate(prefab, packages[phase].position, Quaternion.identity);
-        GameObject spot =Instantiate(prefab2, packages[phase].position2, Quaternion.identity);
+        GameObject spot = Instantiate(prefab2, packages[phase].position2, Quaternion.identity);
+        GameObject battery =Instantiate(prefab3, packages[phase].SetBatteryPosition, Quaternion.identity);
         // RigidbodyとBoxColliderを追加
         if (obj.GetComponent<Rigidbody>() == null)
             obj.AddComponent<Rigidbody>();
@@ -120,11 +135,17 @@ public class Global : MonoBehaviour
         boxCollider.isTrigger = true;
         obj.tag = "luggage";
         spot.tag = "Spot";
-
         phase++;
 
     }
 
+    public static void DeleteBattery()
+    {
+        foreach (GameObject DeleteBatteryObj in GameObject.FindGameObjectsWithTag("Battery"))
+        {
+            Destroy(DeleteBatteryObj);
+        }
+    }
     public static void ChangeScene(string SceneName)
     {
         SceneManager.LoadScene(SceneName);

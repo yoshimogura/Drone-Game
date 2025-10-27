@@ -4882,6 +4882,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "New\u8377\u7269"
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8f7579ac1c76c9b4d992f542aa59c019, type: 3}
+      propertyPath: m_TagString
+      value: luggage
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

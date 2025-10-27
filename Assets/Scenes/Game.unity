@@ -1626,8 +1626,9 @@ MonoBehaviour:
   lugagge2: {fileID: 5326502000980783181, guid: 6c13b512869e7e3429475a9a8fb39513, type: 3}
   lugagge3: {fileID: 8087089342333627884, guid: 3f6c83fe9d8e3534a9303e483d2cefe6, type: 3}
   Spot: {fileID: 8465095173027559145, guid: 11cf7e6ffecddd94d887f88265d372fb, type: 3}
-  battery: {fileID: 355836012}
+  batteryText: {fileID: 355836012}
   spawnPosition: {x: 0, y: 0, z: 0}
+  battery: {fileID: 907494002461851825, guid: 38f14b09f6c8888478009f179dde0a90, type: 3}
   packages: []
 --- !u!4 &2142467303
 Transform:
@@ -1795,7 +1796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5461800433029233289, guid: efd38faf5bac3eb43a8f8bc44e6a09a4, type: 3}
       propertyPath: battery
-      value: 100
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

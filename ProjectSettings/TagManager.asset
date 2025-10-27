@@ -10,6 +10,7 @@ TagManager:
   - luggage
   - LuggageEffect
   - Spot
+  - Battery
   layers:
   - Default
   - TransparentFX

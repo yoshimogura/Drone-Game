@@ -56,7 +56,6 @@ public class DroneController : MonoBehaviour
         bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f||Input.GetKey(KeyCode.Space) ||
         Input.GetKey(KeyCode.LeftShift);
 
-
     // 状態管理
     if (isMoving && !wasMoving)
     {
@@ -156,9 +155,9 @@ public class DroneController : MonoBehaviour
                     other.transform.SetParent(cargoAttachPoint);
                     Dictionary<string, Vector3> scaleMap = new Dictionary<string, Vector3>()
                     {
-                        { "荷物 2(Clone)", new Vector3(0.07f, 0.18f, 0.5f) },
-                        { "財布(Clone)", new Vector3(0.4f, 0.09f, 0.25f) },
-                        { "スマホ(Clone)", new Vector3(0.4f, 0.09f, 0.25f) }
+                        { "New荷物(Clone)", new Vector3(0.07f, 0.18f, 0.5f) },
+                        { "New財布(Clone)", new Vector3(0.4f, 0.09f, 0.25f) },
+                        { "Newスマホ(Clone)", new Vector3(0.4f, 0.09f, 0.25f) }
                     };
                     if (scaleMap.ContainsKey(boxName))
                     {
@@ -243,7 +242,14 @@ public class DroneController : MonoBehaviour
            
 
         }
-
+        if (other.gameObject.CompareTag("Battery"))
+        {
+            if (RemainingBattery <= 50)
+                RemainingBattery += 50;
+            else
+             RemainingBattery = 100 - RemainingBattery;
+                Global.DeleteBattery();
+        }
     
     }
     void OnCollisionEnter(Collision collision)
