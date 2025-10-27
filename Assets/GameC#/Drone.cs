@@ -69,7 +69,7 @@ public class DroneController : MonoBehaviour
 
     if (isMoving)
     {
-            RemainingBattery-=0.05f;
+            RemainingBattery-=0.01f;
         transitionTimer += Time.deltaTime;
         if (transitionTimer > takeOffDuration)
         {
