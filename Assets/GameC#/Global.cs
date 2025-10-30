@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
-
 [System.Serializable]
 public class Package
 {
@@ -51,6 +50,8 @@ public class Global : MonoBehaviour
     public Slider meterSlider; // メーターUI
     public int currentValue = 100; // 現在の値
     public int maxValue = 100;    // 最大値
+    public Outline sliderOutline;
+
 
 
     void Start()
@@ -59,9 +60,10 @@ public class Global : MonoBehaviour
         packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(10, -10, 5),battery,new Vector3(12, 10, 6));
         packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(12, 10, 6));
         packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(12, 10, 6));
-        
-        
+
+
         drone = GameObject.Find("drone 2").GetComponent<DroneController>();
+
         meterSlider.maxValue = maxValue;
         meterSlider.value = drone.RemainingBattery;
 
@@ -81,18 +83,28 @@ public class Global : MonoBehaviour
     }
     void Update()
     {
-        batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString() + "%";//切り上げてテキストに表示
+        batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString() + "%";//切り上げｔテキストに表示
         meterSlider.value = drone.RemainingBattery;//メーター
         batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString() + "%";
         meterSlider.value = drone.RemainingBattery;
 
         // 色変更
         if (drone.RemainingBattery > 60)
+        {
             meterSlider.fillRect.GetComponent<Image>().color = Color.green;
+            sliderOutline.effectColor = new Color(0, 0, 0, 0); // 完全に透明（RGBA）
+        }
         else if (drone.RemainingBattery > 30)
+        {
+            sliderOutline.effectColor = new Color(0, 0, 0, 0); // 完全に透明（RGBA）
             meterSlider.fillRect.GetComponent<Image>().color = Color.yellow;
+        }
         else
+        {
+            sliderOutline.effectColor = Color.red;
             meterSlider.fillRect.GetComponent<Image>().color = Color.red;
+        }
+           
 
         if (drone.RemainingBattery <= 0)
         {
