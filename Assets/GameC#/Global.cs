@@ -48,6 +48,9 @@ public class Global : MonoBehaviour
     public GameObject battery;
     public Package[] packages;
     private DroneController drone;
+    public Slider meterSlider; // メーターUI
+    public int currentValue = 100; // 現在の値
+    public int maxValue = 100;    // 最大値
 
 
     void Start()
@@ -59,6 +62,9 @@ public class Global : MonoBehaviour
         
         
         drone = GameObject.Find("drone 2").GetComponent<DroneController>();
+        meterSlider.maxValue = maxValue;
+        meterSlider.value = drone.RemainingBattery;
+
 
         audioSource = GetComponent<AudioSource>();
 
@@ -76,10 +82,22 @@ public class Global : MonoBehaviour
     void Update()
     {
         batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString() + "%";//切り上げてテキストに表示
+        meterSlider.value = drone.RemainingBattery;//メーター
+        batteryText.text = Mathf.Ceil(drone.RemainingBattery).ToString() + "%";
+        meterSlider.value = drone.RemainingBattery;
+
+        // 色変更
+        if (drone.RemainingBattery > 60)
+            meterSlider.fillRect.GetComponent<Image>().color = Color.green;
+        else if (drone.RemainingBattery > 30)
+            meterSlider.fillRect.GetComponent<Image>().color = Color.yellow;
+        else
+            meterSlider.fillRect.GetComponent<Image>().color = Color.red;
+
         if (drone.RemainingBattery <= 0)
         {
             Debug.Log("バッテリー切れだよ")
-;        }
+;       }
     }
     public void SpawnNextPackageDelayed(float delaySeconds)
     {
