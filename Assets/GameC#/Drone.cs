@@ -53,8 +53,11 @@ public class DroneController : MonoBehaviour
         Vector3 moveDirection = transform.forward * vertical;
         rb.velocity = moveDirection * speed;
 
-        bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f||Input.GetKey(KeyCode.Space) ||
+        bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f || Input.GetKey(KeyCode.Space) ||
         Input.GetKey(KeyCode.LeftShift);
+        if (RemainingBattery > -6.8){
+            RemainingBattery -= 0.01f;
+        }
 
     // 状態管理
     if (isMoving && !wasMoving)
@@ -68,8 +71,10 @@ public class DroneController : MonoBehaviour
     }
 
     if (isMoving)
-    {
-            RemainingBattery-=0.1f;
+    {   
+        if(RemainingBattery>0){
+            RemainingBattery -= 0.01f;
+        }
         transitionTimer += Time.deltaTime;
         if (transitionTimer > takeOffDuration)
         {
