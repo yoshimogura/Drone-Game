@@ -55,8 +55,15 @@ public class DroneController : MonoBehaviour
 
         bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f || Input.GetKey(KeyCode.Space) ||
         Input.GetKey(KeyCode.LeftShift);
-        if (RemainingBattery > -6.8){
-            RemainingBattery -= 0.01f;
+        if (this.transform.position.y > -6.8){
+            RemainingBattery -= 0.008f;
+        }
+        else
+        {
+            controller1.SetState(PropellerController.State.Idle);
+            controller2.SetState(PropellerController.State.Idle);
+            controller3.SetState(PropellerController.State.Idle);
+            controller4.SetState(PropellerController.State.Idle);
         }
 
     // 状態管理
@@ -240,7 +247,7 @@ public class DroneController : MonoBehaviour
             if (RemainingBattery <= 50)
                 RemainingBattery += 50;
             else
-             RemainingBattery = 100 - RemainingBattery;
+                RemainingBattery = 100;
                 Global.DeleteBattery();
         }
     

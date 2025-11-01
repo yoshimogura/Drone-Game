@@ -31,7 +31,8 @@ public class PropellerController : MonoBehaviour
                 currentSpeed = maxSpeed;
                 break;
             case State.Landing:
-                currentSpeed = Mathf.Max(currentSpeed - deceleration * Time.deltaTime, 0f);
+                currentSpeed = maxSpeed - 3200;
+                // Mathf.Max(currentSpeed - deceleration * Time.deltaTime, 0f);
                 // transform.rotation = Quaternion.RotateTowards(transform.rotation, initialRotation, 100f * Time.deltaTime);
 
                 break;
