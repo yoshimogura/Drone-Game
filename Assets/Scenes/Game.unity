@@ -4252,7 +4252,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1053129474}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -9813,10 +9813,9 @@ MonoBehaviour:
   spawnPosition: {x: 36, y: 0, z: 21}
   battery: {fileID: 907494002461851825, guid: 38f14b09f6c8888478009f179dde0a90, type: 3}
   packages: []
-  drone: {fileID: 0}
   meterSlider: {fileID: 925958847}
   currentValue: 100
-  maxValue: 150
+  maxValue: 100
   sliderOutline: {fileID: 255914073}
 --- !u!4 &2142467303
 Transform:

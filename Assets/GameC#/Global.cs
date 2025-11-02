@@ -46,9 +46,9 @@ public class Global : MonoBehaviour
     public Package[] packages;
     private DroneController drone;
     public Slider meterSlider; // メーターUI
-    public int currentValue = 100; // 現在の値
-    public int maxValue = 150;    // 最大値
-    public Outline sliderOutline;
+    public int currentValue = 100; // 
+    public int maxValue = 100;   // 最大値
+    public Outline sliderOutline;//
 
 
 
