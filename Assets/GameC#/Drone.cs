@@ -28,7 +28,7 @@ public class DroneController : MonoBehaviour
     public  float RemainingBattery = 100;
     
 
-    
+    //
 
     void Start()
     {

@@ -16,7 +16,6 @@ public class PropellerController : MonoBehaviour
     // void Start()
     // {
     //     initialRotation = transform.rotation;
-    // }
     void Update()
     {
         
