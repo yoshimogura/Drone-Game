@@ -8,10 +8,6 @@ public class Luggage : MonoBehaviour
     // Start is called before the first frame update
 
     // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void GetLugggage(string Luggage)
     {
         if (Luggage == this.gameObject.name)
