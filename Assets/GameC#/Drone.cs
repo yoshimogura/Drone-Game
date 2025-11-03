@@ -25,7 +25,9 @@ public class DroneController : MonoBehaviour
     public float takeOffDuration = 1.5f; // ゆっくり加速する時間
     public Transform cargoAttachPoint; //ドローンの荷物つける場所
     private Global globalScript;
-    public  float RemainingBattery = 100;
+    public float RemainingBattery = 100f;
+    public int UpBatteryCount=0;
+    bool GetBattrey=false;
     
 
     //
@@ -55,7 +57,8 @@ public class DroneController : MonoBehaviour
 
         bool isMoving = Mathf.Abs(horizontal) > 0.1f || Mathf.Abs(vertical) > 0.1f || Input.GetKey(KeyCode.Space) ||
         Input.GetKey(KeyCode.LeftShift);
-        if (this.transform.position.y > -6.8){
+        if (this.transform.position.y > -6.8)
+        {
             RemainingBattery -= 0.008f;
         }
         else
@@ -66,54 +69,55 @@ public class DroneController : MonoBehaviour
             controller4.SetState(PropellerController.State.Idle);
         }
 
-    // 状態管理
-    if (isMoving && !wasMoving)
-    {
-        // 移動開始（TakeOffへ）
-        transitionTimer = 0f;
-        controller1.SetState(PropellerController.State.TakingOff);
-        controller2.SetState(PropellerController.State.TakingOff);
-        controller3.SetState(PropellerController.State.TakingOff);
-        controller4.SetState(PropellerController.State.TakingOff);
-    }
-
-    if (isMoving)
-    {   
-        if(RemainingBattery>0){
-            RemainingBattery -= 0.01f;
-        }
-        transitionTimer += Time.deltaTime;
-        if (transitionTimer > takeOffDuration)
+        // 状態管理
+        if (isMoving && !wasMoving)
         {
-            // 規定時間経過後、Flyingへ
-            controller1.SetState(PropellerController.State.Flying);
-            controller2.SetState(PropellerController.State.Flying);
-            controller3.SetState(PropellerController.State.Flying);
-            controller4.SetState(PropellerController.State.Flying);
+            // 移動開始（TakeOffへ）
+            transitionTimer = 0f;
+            controller1.SetState(PropellerController.State.TakingOff);
+            controller2.SetState(PropellerController.State.TakingOff);
+            controller3.SetState(PropellerController.State.TakingOff);
+            controller4.SetState(PropellerController.State.TakingOff);
         }
-    }
 
-    if (!isMoving && wasMoving)
-    {
-        controller1.SetState(PropellerController.State.Landing);
-        controller2.SetState(PropellerController.State.Landing);
-        controller3.SetState(PropellerController.State.Landing);
-        controller4.SetState(PropellerController.State.Landing);
-    }
+        if (isMoving)
+        {
+            if (RemainingBattery > 0)
+            {
+                RemainingBattery -= 0.01f;
+            }
+            transitionTimer += Time.deltaTime;
+            if (transitionTimer > takeOffDuration)
+            {
+                // 規定時間経過後、Flyingへ
+                controller1.SetState(PropellerController.State.Flying);
+                controller2.SetState(PropellerController.State.Flying);
+                controller3.SetState(PropellerController.State.Flying);
+                controller4.SetState(PropellerController.State.Flying);
+            }
+        }
 
-    // プロペラが完全停止してからIdleへ
-    if (!isMoving && controller1.currentSpeed < 10f)
-    {
-        controller1.SetState(PropellerController.State.Idle);
-        controller2.SetState(PropellerController.State.Idle);
-        controller3.SetState(PropellerController.State.Idle);
-        controller4.SetState(PropellerController.State.Idle);
-    }
+        if (!isMoving && wasMoving)
+        {
+            controller1.SetState(PropellerController.State.Landing);
+            controller2.SetState(PropellerController.State.Landing);
+            controller3.SetState(PropellerController.State.Landing);
+            controller4.SetState(PropellerController.State.Landing);
+        }
+
+        // プロペラが完全停止してからIdleへ
+        if (!isMoving && controller1.currentSpeed < 10f)
+        {
+            controller1.SetState(PropellerController.State.Idle);
+            controller2.SetState(PropellerController.State.Idle);
+            controller3.SetState(PropellerController.State.Idle);
+            controller4.SetState(PropellerController.State.Idle);
+        }
 
 
-    wasMoving = isMoving;
+        wasMoving = isMoving;
 
-        
+
 
         // **A/Dで左右回転**
         transform.Rotate(Vector3.up * horizontal * rotationSpeed * Time.deltaTime);
@@ -136,6 +140,27 @@ public class DroneController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * tiltSmooth);
     }
 
+
+    // void FixedUpdate()
+    // {
+    //     Debug.Log(GetBattrey);
+    //     if (GetBattrey)
+    //     {
+    //         for (int i = 0; UpBatteryCount > i; i++)
+    //         {
+    //             Debug.Log(UpBatteryCount);
+    //             RemainingBattery+5;
+    //             Debug.Log(i);
+    //             if (i > UpBatteryCount)
+    //             {
+    //                 GetBattrey = false;
+    //                 break;
+    //             }
+    //         }
+
+
+    //     }
+    // }
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("当たった");
@@ -189,7 +214,7 @@ public class DroneController : MonoBehaviour
                             Destroy(child.gameObject);
                         }
                     }
-                    
+
 
 
                 }
@@ -198,8 +223,8 @@ public class DroneController : MonoBehaviour
         }
         if (globalScript != null && LuggagesList.Count > 0)
         {
-            
-            Package currentPackage = globalScript.packages[Global.phase - 1]; 
+
+            Package currentPackage = globalScript.packages[Global.phase - 1];
             if (other.gameObject.CompareTag("Spot"))
             {
                 Debug.Log("配達場所来た");
@@ -238,19 +263,35 @@ public class DroneController : MonoBehaviour
                 }
             }
 
-            
-           
+
+
 
         }
         if (other.gameObject.CompareTag("Battery"))
         {
+            GetBattrey = true;
             if (RemainingBattery <= 50)
-                RemainingBattery += 50;
+                UpBatteryCount = 50;
             else
-                RemainingBattery = 100;
-                Global.DeleteBattery();
+                UpBatteryCount = 100 - (int)RemainingBattery;
+
+            StartCoroutine(ChargeBatteryGradually(UpBatteryCount));
+            Global.DeleteBattery();
+
         }
-    
+
+    }
+    IEnumerator ChargeBatteryGradually(int amount)
+    {
+        GetBattrey = true;
+        int added = 0;
+        while (added < amount)
+        {
+            RemainingBattery = Mathf.Min(RemainingBattery + 1f, 100f);
+            added++;
+            yield return new WaitForSeconds(0.05f); // 50msごとに1ずつ増加
+        }
+        GetBattrey = false;
     }
     void OnCollisionEnter(Collision collision)
     {
