@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 [System.Serializable]
+
 public class Package
 {
     public GameObject item;
@@ -39,6 +40,7 @@ public class Global : MonoBehaviour
     public GameObject lugagge3;
     public GameObject Spot;
     public TextMeshProUGUI batteryText;
+    public Image BackgrounfBatteryText;
 
     public Vector3 spawnPosition = new Vector3(36, 0, 21);
     public static int phase = 0;
@@ -89,16 +91,24 @@ public class Global : MonoBehaviour
         // 色変更
         if (drone.RemainingBattery > 60)
         {
+            BackgrounfBatteryText.color =HexToColor("#4CAf05");
+            batteryText.color = HexToColor("#E8F5E9");
             meterSlider.fillRect.GetComponent<Image>().color = Color.green;
             sliderOutline.effectColor = new Color(0, 0, 0, 0); // 完全に透明（RGBA）
         }
         else if (drone.RemainingBattery > 30)
         {
+            BackgrounfBatteryText.color = HexToColor("#FFEB3B");
+            batteryText.color = HexToColor("#000000");
+
             sliderOutline.effectColor = new Color(0, 0, 0, 0); // 完全に透明（RGBA）
             meterSlider.fillRect.GetComponent<Image>().color = Color.yellow;
         }
         else
         {
+            BackgrounfBatteryText.color = HexToColor("#F44336");
+            batteryText.color = HexToColor("#FFFFFF");
+
             sliderOutline.effectColor = Color.red;
             meterSlider.fillRect.GetComponent<Image>().color = Color.red;
         }
@@ -178,6 +188,13 @@ public class Global : MonoBehaviour
     {
         SceneManager.LoadScene(SceneName);
     }
+    Color HexToColor(string hex)
+    {
+        Color color;
+        ColorUtility.TryParseHtmlString(hex, out color);
+        return color;
+    }
+
     public void Sound()
     {
         audioSource.PlayOneShot(audioSource.clip);

@@ -125,11 +125,11 @@ public class DroneController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            this.transform.position += new Vector3(0, 0.1f, 0);
+            this.transform.position += new Vector3(0, 0.2f, 0);
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            this.transform.position += new Vector3(0, -0.1f, 0);
+            this.transform.position += new Vector3(0, -0.2f, 0);
         }
         // **傾きを計算**
         float targetTiltX = Mathf.Clamp(vertical * tiltAngle, -tiltAngle, tiltAngle);
