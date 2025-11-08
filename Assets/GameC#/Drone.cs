@@ -60,6 +60,7 @@ public class DroneController : MonoBehaviour
         if (this.transform.position.y > -6.8)
         {
             RemainingBattery -= 0.008f;
+            // RemainingBattery -= 1f;
         }
         else
         {

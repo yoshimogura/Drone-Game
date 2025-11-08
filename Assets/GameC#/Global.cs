@@ -116,7 +116,8 @@ public class Global : MonoBehaviour
 
         if (drone.RemainingBattery <= 0)
         {
-            Debug.Log("バッテリー切れだよ")
+            Debug.Log("バッテリー切れだよ");
+            SceneManager.LoadScene("GameOver");
 ;       }
     }
     public void SpawnNextPackageDelayed(float delaySeconds)
@@ -144,6 +145,7 @@ public class Global : MonoBehaviour
         if (phase >= packages.Length)
         {
             Debug.Log("すべての物たちを配置済み");
+            SceneManager.LoadScene("Result");
             yield break;
         }
 
