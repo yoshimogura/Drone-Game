@@ -4190,6 +4190,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834897195}
   m_Mesh: {fileID: 1387659088494205822, guid: 4a23b303da9c6c441840546804ef8539, type: 3}
+--- !u!1 &878586959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 878586961}
+  - component: {fileID: 878586960}
+  m_Layer: 0
+  m_Name: GameTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &878586960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878586959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 867dab4dfec88a44e8e52d37ea287ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &878586961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878586959}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 428.4429, y: 243.41673, z: 8.231377}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &879151089
 GameObject:
   m_ObjectHideFlags: 0
@@ -10469,7 +10513,7 @@ MonoBehaviour:
   lugagge1: {fileID: 7822742050560792954, guid: 5f7a2e5852552fb46bb4674cb831b06e, type: 3}
   lugagge2: {fileID: 5326502000980783181, guid: 6c13b512869e7e3429475a9a8fb39513, type: 3}
   lugagge3: {fileID: 919132149155446097, guid: 8a3c1a8ed72686c44a38e4cf4af99e33, type: 3}
-  Spot: {fileID: 919132149155446097, guid: 9f3ca7ea96206bf4d8c701f16266917e, type: 3}
+  Spot: {fileID: 8465095173027559145, guid: 11cf7e6ffecddd94d887f88265d372fb, type: 3}
   batteryText: {fileID: 355836012}
   BackgrounfBatteryText: {fileID: 1142006155}
   spawnPosition: {x: 36, y: 0, z: 21}
@@ -10479,6 +10523,7 @@ MonoBehaviour:
   currentValue: 100
   maxValue: 100
   sliderOutline: {fileID: 255914073}
+  startTime: 0
 --- !u!4 &2142467303
 Transform:
   m_ObjectHideFlags: 0
@@ -10677,3 +10722,4 @@ SceneRoots:
   - {fileID: 942950912}
   - {fileID: 593608768}
   - {fileID: 1385469196}
+  - {fileID: 878586961}

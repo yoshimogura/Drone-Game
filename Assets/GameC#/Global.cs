@@ -51,19 +51,21 @@ public class Global : MonoBehaviour
     public int currentValue = 100; // 
     public int maxValue = 100;   // 最大値
     public Outline sliderOutline;//
+    public float startTime;
+    
+
 
 
 
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(10, -10, 5),battery,new Vector3(12, 10, 6));
-        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(12, 10, 6));
-        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(12, 10, 6));
+        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(10, -10, 5),battery,new Vector3(12, 13, 6));
+        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(12, 13, 6));
+        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(12, 13, 6));
 
 
         drone = GameObject.Find("drone 2").GetComponent<DroneController>();
-
         meterSlider.maxValue = maxValue;
         meterSlider.value = drone.RemainingBattery;
 
@@ -79,7 +81,9 @@ public class Global : MonoBehaviour
             }
         }
 
+
         StartCoroutine(SpawnNextPackage(0f)); // 最初の1つを配置
+        startTime = Time.time;
     }
     void Update()
     {
@@ -168,8 +172,10 @@ public class Global : MonoBehaviour
             obj.AddComponent<Rigidbody>();
         if (obj.GetComponent<BoxCollider>() == null)
             obj.AddComponent<BoxCollider>();
+        if (spot.GetComponent<BoxCollider>() == null)
+            spot.AddComponent<BoxCollider>();
         Rigidbody rb = obj.GetComponent<Rigidbody>();
-        BoxCollider boxCollider = obj.GetComponent<BoxCollider>();
+        BoxCollider boxCollider = obj.GetComponent<BoxCollider>();    
         rb.useGravity = false; // ← ここで重力をオフにする
         rb.isKinematic = true;
         boxCollider.isTrigger = true;
