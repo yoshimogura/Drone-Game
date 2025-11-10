@@ -27,7 +27,9 @@ public class DroneController : MonoBehaviour
     private Global globalScript;
     public float RemainingBattery = 100f;
     public int UpBatteryCount=0;
-    bool GetBattrey=false;
+    bool GetBattrey = false;
+    public AudioSource audioSource;
+
     
 
     //
@@ -83,6 +85,7 @@ public class DroneController : MonoBehaviour
 
         if (isMoving)
         {
+
             if (RemainingBattery > 0)
             {
                 RemainingBattery -= 0.01f;
