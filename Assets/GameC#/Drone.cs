@@ -9,7 +9,7 @@ public class DroneController : MonoBehaviour
 {
     float rotationSpeed = 55f;
     float speed = 40f;
-    public float tiltAngle = 5f; // 最大傾斜角
+    float tiltAngle = 7f; // 最大傾斜角
     public float tiltSmooth = 100f; // 傾きの補間速度
     private Rigidbody rb;
     
@@ -70,6 +70,7 @@ public class DroneController : MonoBehaviour
             controller2.SetState(PropellerController.State.Idle);
             controller3.SetState(PropellerController.State.Idle);
             controller4.SetState(PropellerController.State.Idle);
+            audioSource.Stop();
         }
 
         // 状態管理
@@ -81,14 +82,19 @@ public class DroneController : MonoBehaviour
             controller2.SetState(PropellerController.State.TakingOff);
             controller3.SetState(PropellerController.State.TakingOff);
             controller4.SetState(PropellerController.State.TakingOff);
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play(); // 1回だけ再生開始
+            }
+            audioSource.volume = 1f;
+
         }
 
         if (isMoving)
         {
-
             if (RemainingBattery > 0)
             {
-                RemainingBattery -= 0.01f;
+                RemainingBattery -= 0.005f;
             }
             transitionTimer += Time.deltaTime;
             if (transitionTimer > takeOffDuration)
@@ -98,6 +104,7 @@ public class DroneController : MonoBehaviour
                 controller2.SetState(PropellerController.State.Flying);
                 controller3.SetState(PropellerController.State.Flying);
                 controller4.SetState(PropellerController.State.Flying);
+                
             }
         }
 
@@ -107,6 +114,7 @@ public class DroneController : MonoBehaviour
             controller2.SetState(PropellerController.State.Landing);
             controller3.SetState(PropellerController.State.Landing);
             controller4.SetState(PropellerController.State.Landing);
+            audioSource.volume = 0.5f;
         }
 
         // プロペラが完全停止してからIdleへ
@@ -127,11 +135,11 @@ public class DroneController : MonoBehaviour
         transform.Rotate(Vector3.up * horizontal * rotationSpeed * Time.deltaTime);
 
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space)&&this.transform.position.y<=140)
         {
             this.transform.position += new Vector3(0, 0.2f, 0);
         }
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift)&&this.transform.position.y > -6.8)
         {
             this.transform.position += new Vector3(0, -0.2f, 0);
         }
@@ -143,28 +151,6 @@ public class DroneController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(targetTiltX, transform.eulerAngles.y, targetTiltZ);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * tiltSmooth);
     }
-
-
-    // void FixedUpdate()
-    // {
-    //     Debug.Log(GetBattrey);
-    //     if (GetBattrey)
-    //     {
-    //         for (int i = 0; UpBatteryCount > i; i++)
-    //         {
-    //             Debug.Log(UpBatteryCount);
-    //             RemainingBattery+5;
-    //             Debug.Log(i);
-    //             if (i > UpBatteryCount)
-    //             {
-    //                 GetBattrey = false;
-    //                 break;
-    //             }
-    //         }
-
-
-    //     }
-    // }
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("当たった");
@@ -184,11 +170,8 @@ public class DroneController : MonoBehaviour
                     {
                         luggage.GetLugggage(boxName);
                     }
-                    Global player = GameObject.Find("Global").GetComponent<Global>();
-                    player.audioSource.Play();
-
-
-
+                    Global global = GameObject.Find("Global").GetComponent<Global>();
+                    global.audioSource.Play();
                     // 荷物をドローンの下にくっつける処理
 
                     other.transform.position = cargoAttachPoint.position;
@@ -205,7 +188,6 @@ public class DroneController : MonoBehaviour
                         other.transform.localScale = scaleMap[boxName];
                     }
 
-
                     Rigidbody rb = other.GetComponent<Rigidbody>();
                     if (rb != null)
                     {
@@ -218,8 +200,6 @@ public class DroneController : MonoBehaviour
                             Destroy(child.gameObject);
                         }
                     }
-
-
 
                 }
             }
@@ -266,9 +246,6 @@ public class DroneController : MonoBehaviour
                     }
                 }
             }
-
-
-
 
         }
         if (other.gameObject.CompareTag("Battery"))

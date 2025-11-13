@@ -52,10 +52,6 @@ public class Global : MonoBehaviour
     public int maxValue = 100;   // 最大値
     public Outline sliderOutline;//
     public float startTime;
-    
-
-
-
 
     void Start()
     {
@@ -116,7 +112,6 @@ public class Global : MonoBehaviour
             sliderOutline.effectColor = Color.red;
             meterSlider.fillRect.GetComponent<Image>().color = Color.red;
         }
-           
 
         if (drone.RemainingBattery <= 0)
         {

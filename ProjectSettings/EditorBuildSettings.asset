@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Result.unity
     guid: 5434ea98594762a43a4efbeb6ad6f097
   - enabled: 1
-    path: Assets/Scenes/mountainStage.unity
-    guid: 4a83624c4541032468fae983eccf2e36
-  - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 437d8a67d7c418c43a784d45dde6777a
   m_configObjects: {}
