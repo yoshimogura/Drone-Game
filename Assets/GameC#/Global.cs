@@ -68,6 +68,7 @@ public class Global : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
+
         // foreach (Transform child in targetParent.transform)
         // {
         //     if (child.GetComponent<MeshFilter>() != null)
