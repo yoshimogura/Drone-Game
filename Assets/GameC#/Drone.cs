@@ -29,6 +29,7 @@ public class DroneController : MonoBehaviour
     public int UpBatteryCount=0;
     bool GetBattrey = false;
     public AudioSource audioSource;
+    public AudioSource BatteryAudioSource;
 
     
 
@@ -250,6 +251,11 @@ public class DroneController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Battery"))
         {
+            if (!BatteryAudioSource.isPlaying)
+            {
+                BatteryAudioSource.Play();
+            }
+
             GetBattrey = true;
             if (RemainingBattery <= 50)
                 UpBatteryCount = 50;

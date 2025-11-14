@@ -75,17 +75,16 @@ public class Global : MonoBehaviour
         //         MeshCollider collider = child.gameObject.AddComponent<MeshCollider>();
         //         collider.convex = false;
         //     }
+        // // }
+        // foreach (Transform child in targetParent.transform)
+        // {
+        //     MeshFilter meshFilter = child.GetComponent<MeshFilter>();
+        //     if (meshFilter != null && meshFilter.sharedMesh != null)
+        //     {
+        //         MeshCollider collider = child.gameObject.AddComponent<MeshCollider>();
+        //         collider.sharedMesh = meshFilter.sharedMesh;
+        //     }
         // }
-        foreach (Transform child in targetParent.transform)
-        {
-            MeshFilter meshFilter = child.GetComponent<MeshFilter>();
-            if (meshFilter != null && meshFilter.sharedMesh != null)
-            {
-                MeshCollider collider = child.gameObject.AddComponent<MeshCollider>();
-                collider.sharedMesh = meshFilter.sharedMesh;
-                collider.convex = true; // WebGLではtrueが必要な場合あり
-            }
-        }
 
 
 
