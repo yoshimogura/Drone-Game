@@ -62,7 +62,7 @@ public class DroneController : MonoBehaviour
         Input.GetKey(KeyCode.LeftShift);
         if (this.transform.position.y > -6.8)
         {
-            RemainingBattery -= 0.005f;
+            RemainingBattery -= 0.001f;
             // RemainingBattery -= 1f;
         }
         else
@@ -95,7 +95,7 @@ public class DroneController : MonoBehaviour
         {
             if (RemainingBattery > 0)
             {
-                RemainingBattery -= 0.0025f;
+                RemainingBattery -= 0.007f;
             }
             transitionTimer += Time.deltaTime;
             if (transitionTimer > takeOffDuration)

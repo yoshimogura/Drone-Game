@@ -10,8 +10,8 @@ public class ResultGlobal : MonoBehaviour
 
     void Start()
     {
-        // float elapsed = GameTimer.Instance.GetElapsedTime();
-        // timerText.text = "ゲームクリアおめでとう！　クリア時間:"+elapsed.ToString("F2") + " 秒";
+        float elapsed = GameTimer.Instance.GetElapsedTime();
+        timerText.text = "ゲームクリアおめでとう！　クリア時間:"+elapsed.ToString("F2") + " 秒";
 
     }
 

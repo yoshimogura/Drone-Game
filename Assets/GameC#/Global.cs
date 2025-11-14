@@ -58,7 +58,7 @@ public class Global : MonoBehaviour
         packages = new Package[3];
         packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(-20, -10, -10),battery,new Vector3(12, 13, 6));
         packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(0, 25, -252)); 
-        packages[2] = new Package(lugagge3, new Vector3(-5, 20, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22));
+        packages[2] = new Package(lugagge3, new Vector3(-170, 20, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22));
 
 
         drone = GameObject.Find("drone 2").GetComponent<DroneController>();
