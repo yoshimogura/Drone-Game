@@ -61,7 +61,7 @@ public class DroneController : MonoBehaviour
         Input.GetKey(KeyCode.LeftShift);
         if (this.transform.position.y > -6.8)
         {
-            RemainingBattery -= 0.008f;
+            RemainingBattery -= 0.005f;
             // RemainingBattery -= 1f;
         }
         else
@@ -94,7 +94,7 @@ public class DroneController : MonoBehaviour
         {
             if (RemainingBattery > 0)
             {
-                RemainingBattery -= 0.005f;
+                RemainingBattery -= 0.0025f;
             }
             transitionTimer += Time.deltaTime;
             if (transitionTimer > takeOffDuration)
@@ -181,7 +181,7 @@ public class DroneController : MonoBehaviour
                     {
                         { "New荷物(Clone)", new Vector3(0.07f, 0.18f, 0.5f) },
                         { "New財布(Clone)", new Vector3(0.4f, 0.09f, 0.25f) },
-                        { "Newスマホ(Clone)", new Vector3(0.4f, 0.09f, 0.25f) }
+                        { "Newスマホ 1(Clone)", new Vector3(0.4f, 0.09f, 0.25f) }
                     };
                     if (scaleMap.ContainsKey(boxName))
                     {
@@ -230,7 +230,7 @@ public class DroneController : MonoBehaviour
                     {
                         { "New荷物(Clone)", new Vector3(0.14f, 0.36f, 1f) },
                         { "New財布(Clone)",   new Vector3(0.72f, 0.05f, 0.6f) },
-                        { "Newスマホ(Clone)", new Vector3(1f, 1f, 1f) }
+                        { "Newスマホ 1(Clone)", new Vector3(1f, 1f, 1f) }
                     };
                         if (scaleMap.ContainsKey(targetName))
                         {

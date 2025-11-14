@@ -310,7 +310,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1628096826}
-        m_TargetAssemblyTypeName: OverButton, Assembly-CSharp
+        m_TargetAssemblyTypeName: Button, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
@@ -769,7 +769,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1628096823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 501ff0083cc7f6642896602a05bdfa0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e5ac5950b03b0a4eb4b50de756a960c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1989770555
