@@ -13,8 +13,9 @@ public class Package
     public Vector3 position2;
     public GameObject SetBattery;
     public Vector3 SetBatteryPosition;
+    public Vector3 StartSpotSize;
 
-    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2,GameObject SetBattery,Vector3 SetBatteryPosition)
+    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2,GameObject SetBattery,Vector3 SetBatteryPosition,Vector3 StartSpotSize)
     {
         this.item = item;
         this.place = place;
@@ -22,6 +23,7 @@ public class Package
         this.position2 = position2;
         this.SetBattery = SetBattery;
         this.SetBatteryPosition = SetBatteryPosition;
+        this.StartSpotSize =StartSpotSize;
     }
     
 }
@@ -38,6 +40,7 @@ public class Global : MonoBehaviour
     public GameObject lugagge1;
     public GameObject lugagge2;
     public GameObject lugagge3;
+    public GameObject StartLugaggeSpot;
     public GameObject Spot;
     public TextMeshProUGUI batteryText;
     public Image BackgrounfBatteryText;
@@ -56,9 +59,9 @@ public class Global : MonoBehaviour
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(-10, 20, 5), Spot, new Vector3(-20, -10, -10),battery,new Vector3(12, 13, 6));
-        packages[1] = new Package(lugagge2, new Vector3(20, 20, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(0, 25, -252)); 
-        packages[2] = new Package(lugagge3, new Vector3(-170, 20, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22));
+        packages[0] = new Package(lugagge1, new Vector3(-10, -5, 5), Spot, new Vector3(-20, -10, -10),battery,new Vector3(12, 13, 6),new Vector3(8f, -5f, 8f));
+        packages[1] = new Package(lugagge2, new Vector3(20, -4, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(0, 25, -252),new Vector3(8f, -5f, 8f)); 
+        packages[2] = new Package(lugagge3, new Vector3(-170, -4, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22),new Vector3(8f, -5f, 8f));
 
 
         drone = GameObject.Find("drone 2").GetComponent<DroneController>();
@@ -104,7 +107,8 @@ public class Global : MonoBehaviour
         {
             BackgrounfBatteryText.color =HexToColor("#4CAf05");
             batteryText.color = HexToColor("#E8F5E9");
-            meterSlider.fillRect.GetComponent<Image>().color = Color.green;
+            meterSlider.fillRect.GetComponent<UnityEngine.UI.Image>().color = Color.green;
+
             sliderOutline.effectColor = new Color(0, 0, 0, 0); // 完全に透明（RGBA）
         }
         else if (drone.RemainingBattery > 30)
@@ -113,7 +117,7 @@ public class Global : MonoBehaviour
             batteryText.color = HexToColor("#000000");
 
             sliderOutline.effectColor = new Color(0, 0, 0, 0); // 完全に透明（RGBA）
-            meterSlider.fillRect.GetComponent<Image>().color = Color.yellow;
+            meterSlider.fillRect.GetComponent<UnityEngine.UI.Image>().color = Color.yellow;
         }
         else
         {
@@ -121,7 +125,7 @@ public class Global : MonoBehaviour
             batteryText.color = HexToColor("#FFFFFF");
 
             sliderOutline.effectColor = Color.red;
-            meterSlider.fillRect.GetComponent<Image>().color = Color.red;
+            meterSlider.fillRect.GetComponent<UnityEngine.UI.Image>().color = Color.red;
         }
 
         if (drone.RemainingBattery <= 0)
@@ -171,8 +175,12 @@ public class Global : MonoBehaviour
 
         // プレハブからインスタンスを生成
         GameObject obj = Instantiate(prefab, packages[phase].position, Quaternion.identity);
+        Vector3 spawnPosition = packages[phase].position;
+        spawnPosition.y -= 1.58f;
+        GameObject StartSpot=Instantiate(StartLugaggeSpot,spawnPosition, Quaternion.identity);
         GameObject spot = Instantiate(prefab2, packages[phase].position2, Quaternion.identity);
         GameObject battery =Instantiate(prefab3, packages[phase].SetBatteryPosition, Quaternion.identity);
+        
         // RigidbodyとBoxColliderを追加
         if (obj.GetComponent<Rigidbody>() == null)
             obj.AddComponent<Rigidbody>();
@@ -180,8 +188,10 @@ public class Global : MonoBehaviour
             obj.AddComponent<BoxCollider>();
         if (spot.GetComponent<BoxCollider>() == null)
             spot.AddComponent<BoxCollider>();
+        StartSpot.AddComponent<BoxCollider>();
         Rigidbody rb = obj.GetComponent<Rigidbody>();
-        BoxCollider boxCollider = obj.GetComponent<BoxCollider>();    
+        BoxCollider boxCollider = obj.GetComponent<BoxCollider>();   
+        StartSpot.transform.localScale = new Vector3(8f, -5f, 8f);
         rb.useGravity = false; // ← ここで重力をオフにする
         rb.isKinematic = true;
         boxCollider.isTrigger = true;
