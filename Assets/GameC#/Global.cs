@@ -59,9 +59,9 @@ public class Global : MonoBehaviour
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(-10, -5, 5), Spot, new Vector3(-20, -10, -10),battery,new Vector3(12, 13, 6),new Vector3(8f, -5f, 8f));
-        packages[1] = new Package(lugagge2, new Vector3(20, -4, -3), Spot, new Vector3(-67, -10, -219),battery,new Vector3(0, 25, -252),new Vector3(8f, -5f, 8f)); 
-        packages[2] = new Package(lugagge3, new Vector3(-170, -4, 8), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22),new Vector3(8f, -5f, 8f));
+        packages[0] = new Package(lugagge1, new Vector3(-20, -5, -30), Spot, new Vector3(-20, -10, -8),battery,new Vector3(12, 13, 6),new Vector3(8f, -5f, 8f));
+        packages[1] = new Package(lugagge2, new Vector3(32, -4, -20), Spot, new Vector3(-67, -10, -219),battery,new Vector3(0, 25, -252),new Vector3(8f, -5f, 8f)); 
+        packages[2] = new Package(lugagge3, new Vector3(-170, -4, 60), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22),new Vector3(8f, -5f, 8f));
 
 
         drone = GameObject.Find("drone 2").GetComponent<DroneController>();
@@ -150,6 +150,10 @@ public class Global : MonoBehaviour
         }
 
         foreach (GameObject DeleteSpotObj in GameObject.FindGameObjectsWithTag("Spot"))
+        {
+            Destroy(DeleteSpotObj);
+        }
+         foreach (GameObject DeleteSpotObj in GameObject.FindGameObjectsWithTag("LugaggeStand"))
         {
             Destroy(DeleteSpotObj);
         }
