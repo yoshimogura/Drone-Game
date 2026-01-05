@@ -15,7 +15,7 @@ public class Package
     public Vector3 SetBatteryPosition;
     public Vector3 StartSpotSize;
 
-    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2,GameObject SetBattery,Vector3 SetBatteryPosition,Vector3 StartSpotSize)
+    public Package(GameObject item, Vector3 position, GameObject place, Vector3 position2, GameObject SetBattery, Vector3 SetBatteryPosition, Vector3 StartSpotSize)
     {
         this.item = item;
         this.place = place;
@@ -23,9 +23,9 @@ public class Package
         this.position2 = position2;
         this.SetBattery = SetBattery;
         this.SetBatteryPosition = SetBatteryPosition;
-        this.StartSpotSize =StartSpotSize;
+        this.StartSpotSize = StartSpotSize;
     }
-    
+
 }
 
 
@@ -59,9 +59,9 @@ public class Global : MonoBehaviour
     void Start()
     {
         packages = new Package[3];
-        packages[0] = new Package(lugagge1, new Vector3(-20, -5, -30), Spot, new Vector3(-20, -10, -8),battery,new Vector3(12, 13, 6),new Vector3(8f, -5f, 8f));
-        packages[1] = new Package(lugagge2, new Vector3(32, -4, -20), Spot, new Vector3(-67, -10, -219),battery,new Vector3(0, 25, -252),new Vector3(8f, -5f, 8f)); 
-        packages[2] = new Package(lugagge3, new Vector3(-170, -4, 60), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22),new Vector3(8f, -5f, 8f));
+        packages[0] = new Package(lugagge1, new Vector3(-20, -5, -30), Spot, new Vector3(-20, -10, -8), battery, new Vector3(12, 13, 6), new Vector3(8f, -5f, 8f));
+        packages[1] = new Package(lugagge2, new Vector3(32, -4, -20), Spot, new Vector3(-67, -10, -219), battery, new Vector3(0, 25, -252), new Vector3(8f, -5f, 8f));
+        packages[2] = new Package(lugagge3, new Vector3(-170, -4, 60), Spot, new Vector3(251, -10, -91), battery, new Vector3(280, 25, 22), new Vector3(8f, -5f, 8f));
 
 
         drone = GameObject.Find("drone 2").GetComponent<DroneController>();
@@ -105,7 +105,7 @@ public class Global : MonoBehaviour
         // 色変更
         if (drone.RemainingBattery > 60)
         {
-            BackgrounfBatteryText.color =HexToColor("#4CAf05");
+            BackgrounfBatteryText.color = HexToColor("#4CAf05");
             batteryText.color = HexToColor("#E8F5E9");
             meterSlider.fillRect.GetComponent<UnityEngine.UI.Image>().color = Color.green;
 
@@ -132,19 +132,20 @@ public class Global : MonoBehaviour
         {
             Debug.Log("バッテリー切れだよ");
             SceneManager.LoadScene("GameOver");
-;       }
+            ;
+        }
     }
     public void SpawnNextPackageDelayed(float delaySeconds)
     {
         StartCoroutine(SpawnNextPackage(delaySeconds));
     }
 
-    public IEnumerator  SpawnNextPackage(float delay)
+    public IEnumerator SpawnNextPackage(float delay)
 
     {
         yield return new WaitForSeconds(delay);
 
-       foreach (GameObject DeleteObj in GameObject.FindGameObjectsWithTag("luggage"))
+        foreach (GameObject DeleteObj in GameObject.FindGameObjectsWithTag("luggage"))
         {
             Destroy(DeleteObj);
         }
@@ -153,7 +154,7 @@ public class Global : MonoBehaviour
         {
             Destroy(DeleteSpotObj);
         }
-         foreach (GameObject DeleteSpotObj in GameObject.FindGameObjectsWithTag("LugaggeStand"))
+        foreach (GameObject DeleteSpotObj in GameObject.FindGameObjectsWithTag("LugaggeStand"))
         {
             Destroy(DeleteSpotObj);
         }
@@ -181,10 +182,10 @@ public class Global : MonoBehaviour
         GameObject obj = Instantiate(prefab, packages[phase].position, Quaternion.identity);
         Vector3 spawnPosition = packages[phase].position;
         spawnPosition.y -= 1.58f;
-        GameObject StartSpot=Instantiate(StartLugaggeSpot,spawnPosition, Quaternion.identity);
+        GameObject StartSpot = Instantiate(StartLugaggeSpot, spawnPosition, Quaternion.identity);
         GameObject spot = Instantiate(prefab2, packages[phase].position2, Quaternion.identity);
-        GameObject battery =Instantiate(prefab3, packages[phase].SetBatteryPosition, Quaternion.identity);
-        
+        GameObject battery = Instantiate(prefab3, packages[phase].SetBatteryPosition, Quaternion.identity);
+
         // RigidbodyとBoxColliderを追加
         if (obj.GetComponent<Rigidbody>() == null)
             obj.AddComponent<Rigidbody>();
@@ -194,7 +195,7 @@ public class Global : MonoBehaviour
             spot.AddComponent<BoxCollider>();
         StartSpot.AddComponent<BoxCollider>();
         Rigidbody rb = obj.GetComponent<Rigidbody>();
-        BoxCollider boxCollider = obj.GetComponent<BoxCollider>();   
+        BoxCollider boxCollider = obj.GetComponent<BoxCollider>();
         StartSpot.transform.localScale = new Vector3(8f, -5f, 8f);
         rb.useGravity = false; // ← ここで重力をオフにする
         rb.isKinematic = true;
